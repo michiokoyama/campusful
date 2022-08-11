@@ -1,0 +1,11 @@
+version: '3'
+services:
+  db:
+    build:
+      context: ./
+      dockerfile: postgresql.dockerfile
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
