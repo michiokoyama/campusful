@@ -1,5 +1,7 @@
 import React from 'react';
-import { Header } from '../../../components/common/Header';
+// import { Header } from '../../../components/common/Header';
+import { SidebarWithHeader } from '../../../components/common/SideBar';
+import { SearchBox } from '../../../components/common/SearchBox';
 
 export const Top = () => {
   const headerProps = {
@@ -7,7 +9,12 @@ export const Top = () => {
     color: 'green',
   }
   return (
-    <Header {...headerProps}>
-      test
-    </Header>);
+    <SidebarWithHeader>
+      <MainContents />
+    </SidebarWithHeader>
+    );
+}
+
+const MainContents = () => {
+    return (<SearchBox />)
 }

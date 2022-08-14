@@ -37,7 +37,7 @@ export const Header = (props: HeadingProps) => {
     >
       <Flex align="center" mr={5}>
         <ChakraHeading as="h1" size="lg" letterSpacing={"tighter"}>
-          Chakra UI
+          Campusful
         </ChakraHeading>
       </Flex>
 
@@ -66,11 +66,9 @@ export const Header = (props: HeadingProps) => {
           variant="outline"
           _hover={{ bg: "teal.700", borderColor: "teal.700" }}
         >
-          Create account
+          Sign In
         </Button>
       </Box>
     </Flex>
   );
 };
-
-export default Header;
