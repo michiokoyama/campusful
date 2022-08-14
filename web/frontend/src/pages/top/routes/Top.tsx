@@ -1,15 +1,10 @@
-import React from 'react';
-import { Box, Badge, ChakraProps, ChakraProviderProps, ChakraStyledOptions } from '@chakra-ui/react'
+import { Box, ChakraStyledOptions } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 // import { Header } from '../../../components/common/Header';
 import { SidebarWithHeader } from '../../../components/common/SideBar';
 import { SearchBox } from '../../../components/common/SearchBox';
 
 export const Top = () => {
-  const headerProps = {
-    title: 'campusful',
-    color: 'green',
-  }
   return (
     <SidebarWithHeader>
       <MainContents />
@@ -30,18 +25,18 @@ const props = [
   {
     userName: '氏名1',
     universityName: '大学名1',
-    title: 'Toooooooooooooooooooooooooooooooooooooooooo long texts. Modern home in city center in the heart of historic Los Angeles',
-    articleBody: 'Toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long text',
-    reviewCount: 34,
-    rating: 4,
+    title: 'タイトル1',
+    articleBody: '本文1',
+    reviewCount: 8,
+    rating: 2,
   },
   {
     userName: '氏名2',
     universityName: '大学名2',
-    title: 'タイトル2',
-    articleBody: '本文2',
-    reviewCount: 8,
-    rating: 2,
+    title: 'Toooooooooooooooooooooooooooooooooooooooooo long texts. Modern home in city center in the heart of historic Los Angeles',
+    articleBody: 'Toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long text',
+    reviewCount: 34,
+    rating: 4,
   },
 
 ]
@@ -75,11 +70,26 @@ const ArticleLists = (props: ChakraStyledOptions) => {
         >
             {props.articleBody}
         </Box>
+        <Box display='flex' mt='2' alignItems='center'>
+          {Array(5)
+            .fill('')
+            .map((_, i) => (
+              <StarIcon
+                key={i}
+                color={i < props.rating ? 'teal.500' : 'gray.300'}
+              />
+            ))}
+          <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+            {props.reviewCount} reviews
+          </Box>
+        </Box>
+ 
       </Box>
     </Box>
   )
 }
 
+/*
 const ArticleList = () => {
   const property = {
     // imageUrl: 'https://bit.ly/2Z4KKcF',
@@ -145,3 +155,4 @@ const ArticleList = () => {
     </Box>
   )
 }
+*/
