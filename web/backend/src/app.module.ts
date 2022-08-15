@@ -3,14 +3,12 @@ import { join } from 'path'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { GraphQLModule } from '@nestjs/graphql'
 import { GraphQLError } from 'graphql'
-import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ArticleModule } from './article/article.module'
-import { ArticleService } from './article/article.service'
 import { ArticlesResolver } from './article/presentation/resolver/article.resolver'
+import { UserResolver } from './user/presentation/resolver/user.resolver'
 import { PrismaService } from './prisma.service'
 import { UserModule } from './user/user.module'
-import { UserService } from './user/user.service'
 
 @Module({
   imports: [
@@ -30,6 +28,6 @@ import { UserService } from './user/user.service'
     UserModule,
   ],
   controllers: [],
-  providers: [AppService, PrismaService, ArticlesResolver],
+  providers: [AppService, PrismaService, ArticlesResolver, UserResolver],
 })
 export class AppModule {}

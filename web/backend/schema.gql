@@ -4,6 +4,7 @@
 
 type Query {
   articles: [Article!]!
+  user: [User!]!
 }
 
 type Article {
@@ -11,8 +12,16 @@ type Article {
   title: String!
   content: String!
   published: Boolean!
+  author: User!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
 }
 
 type Mutation {
   createarticle(title: String!, content: String!): Article!
+  createuser(name: String!, email: String!): User!
 }

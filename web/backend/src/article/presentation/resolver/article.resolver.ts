@@ -8,7 +8,7 @@ export class ArticlesResolver {
 
   @Query(() => [ArticleDto])
   async articles() {
-    return this.prisma.article.findMany()
+    return this.prisma.article.findMany({ include: { author: true } })
   }
 
   @Mutation(() => ArticleDto)
