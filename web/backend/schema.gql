@@ -7,8 +7,10 @@ type Query {
 }
 
 type Article {
+  id: ID!
   title: String!
   content: String!
+  published: Boolean!
 }
 
 type Mutation {
