@@ -1,6 +1,6 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PrismaService } from 'src/prisma.service';
-import { ArticleDto } from '../dto/article.dto';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { PrismaService } from 'src/prisma.service'
+import { ArticleDto } from '../dto/article.dto'
 
 @Resolver(() => ArticleDto)
 export class ArticlesResolver {
@@ -8,7 +8,7 @@ export class ArticlesResolver {
 
   @Query(() => [ArticleDto])
   async articles() {
-    return this.prisma.article.findMany();
+    return this.prisma.article.findMany()
   }
 
   @Mutation(() => ArticleDto)
@@ -16,6 +16,6 @@ export class ArticlesResolver {
     @Args('title') title: string,
     @Args('content') content: string,
   ) {
-    return this.prisma.article.create({ data: { title, content } });
+    return this.prisma.article.create({ data: { title, content } })
   }
 }
