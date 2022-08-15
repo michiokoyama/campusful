@@ -29,7 +29,7 @@ import { UserService } from './user/user.service';
     ArticleModule,
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, UserService, ArticleService, PrismaService, ArticlesResolver],
+  controllers: [],
+  providers: [AppService, PrismaService, ArticlesResolver],
 })
 export class AppModule {}

@@ -10,7 +10,6 @@ import {
 import { UserService } from './user/user.service';
 import { ArticleService } from './article/article.service';
 import { User as UserModel, Article as ArticleModel } from '@prisma/client';
-import { ArticleDto } from 'src/article/presentation/dto/article.dto'
 
 @Controller()
 export class AppController {
@@ -25,10 +24,10 @@ export class AppController {
   }
 
   @Get('feed')
-  async getPublishedPosts(): Promise<ArticleDto[]> {
-    return (await this.postService.articles({
+  async getPublishedPosts(): Promise<ArticleModel[]> {
+    return this.postService.articles({
       where: { published: true },
-    })).map((entity) => ArticleDto.fromEntity(entity));
+    })
   }
 
   @Get('filtered-posts/:searchString')
