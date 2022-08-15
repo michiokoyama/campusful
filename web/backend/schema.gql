@@ -1,0 +1,16 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  articles: [Article!]!
+}
+
+type Article {
+  title: String!
+  content: String!
+}
+
+type Mutation {
+  createarticle(title: String!, content: String!): Article!
+}
