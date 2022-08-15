@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { ArticleDto } from '../../../article/presentation/dto/article.dto'
 
 @ObjectType('User', {
   isAbstract: true,
@@ -27,4 +28,9 @@ export class UserDto {
     nullable: false,
   })
   name!: string
+
+  @Field(() => [ArticleDto], {
+    nullable: false,
+  })
+  articles!: ArticleDto[]
 }
