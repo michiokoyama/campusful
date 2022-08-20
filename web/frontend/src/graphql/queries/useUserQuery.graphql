@@ -1,0 +1,10 @@
+query users {
+  user {
+    id
+    name
+    email
+    articles {
+      id
+    }
+  }
+}

@@ -16,6 +16,10 @@ import { UserModule } from './user/user.module'
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
+      cors: {
+        origin: 'http://localhost:3001',
+        credentials: true,
+      },
       formatError: (error: GraphQLError) => {
         // GraphQLのレスポンスはstacktraceを含んでしまうのでここで除去する
         if (error.extensions?.exception?.stacktrace) {

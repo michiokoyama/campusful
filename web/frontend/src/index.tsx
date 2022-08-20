@@ -4,16 +4,34 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client"
+
+const link = createHttpLink({
+  uri: "http://localhost:4000/graphql",
+  credentials: "include",
+})
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: link,
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ChakraProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ChakraProvider>
+  <ApolloProvider client={client}>
+    <ChakraProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </ChakraProvider>
+  </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

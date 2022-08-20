@@ -3,6 +3,7 @@ import { StarIcon } from '@chakra-ui/icons'
 // import { Header } from '../../../components/common/Header';
 import { SidebarWithHeader } from '../../../components/common/SideBar';
 import { SearchBox } from '../../../components/common/SearchBox';
+import { useArticleLists } from '../hooks/useArticleList'
 
 export const Top = () => {
   return (
@@ -13,9 +14,10 @@ export const Top = () => {
 }
 
 const MainContents = () => {
+  const { data } = useArticleLists()
   return (<>
     <SearchBox />
-    {props.map((prop) => (
+    {data?.articles.map((prop) => (
         <ArticleLists {...prop} />
     ))}
   </>)
@@ -23,24 +25,25 @@ const MainContents = () => {
 
 const props = [
   {
-    userName: '氏名1',
-    universityName: '大学名1',
+    name: '氏名1',
+    // universityName: '大学名1',
     title: 'タイトル1',
-    articleBody: '本文1',
-    reviewCount: 8,
-    rating: 2,
+    content: '本文1',
+    // reviewCount: 8,
+    // rating: 2,
   },
   {
-    userName: '氏名2',
-    universityName: '大学名2',
+    name: '氏名2',
+    // universityName: '大学名2',
     title: 'Toooooooooooooooooooooooooooooooooooooooooo long texts. Modern home in city center in the heart of historic Los Angeles',
-    articleBody: 'Toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long text',
-    reviewCount: 34,
-    rating: 4,
+    content: 'Toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long text',
+    // reviewCount: 34,
+    // rating: 4,
   },
 
 ]
 const ArticleLists = (props: ChakraStyledOptions) => {
+
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       <Box p='6'>
@@ -53,7 +56,8 @@ const ArticleLists = (props: ChakraStyledOptions) => {
             textTransform='uppercase'
             ml='2'
           >
-            {props.universityName} &bull; {props.userName} 
+            {/* {props.universityName} &bull; {props.userName}  */}
+            {props.name}
           </Box>
         </Box>
         <Box
@@ -68,8 +72,9 @@ const ArticleLists = (props: ChakraStyledOptions) => {
         <Box
           noOfLines={3}
         >
-            {props.articleBody}
+            {props.content}
         </Box>
+        {/*
         <Box display='flex' mt='2' alignItems='center'>
           {Array(5)
             .fill('')
@@ -83,6 +88,7 @@ const ArticleLists = (props: ChakraStyledOptions) => {
             {props.reviewCount} reviews
           </Box>
         </Box>
+            */}
  
       </Box>
     </Box>
