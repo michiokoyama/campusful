@@ -1,5 +1,5 @@
 import { Box, ChakraStyledOptions } from '@chakra-ui/react'
-import { StarIcon } from '@chakra-ui/icons'
+// import { StarIcon } from '@chakra-ui/icons'
 // import { Header } from '../../../components/common/Header';
 import { SidebarWithHeader } from '../../../components/common/SideBar';
 import { SearchBox } from '../../../components/common/SearchBox';
