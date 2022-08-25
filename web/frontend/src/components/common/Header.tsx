@@ -71,12 +71,14 @@ const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: 
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
-            Campusful
-          </Text>
+          <Link as={ReactRouterLink} to="/" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+            <Text
+              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+              fontFamily={'heading'}
+              color={useColorModeValue('gray.800', 'white')}>
+              Campusful
+            </Text>
+          </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
