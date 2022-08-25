@@ -28,9 +28,6 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import {
   FiHome,
   FiTrendingUp,
-  // FiMenu,
-  // FiBell,
-  // FiChevronDown,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 
