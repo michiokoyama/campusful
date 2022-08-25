@@ -101,9 +101,10 @@ const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: 
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}
+              backgroundColor={'#98a820'}
               bg={'pink.400'}
               _hover={{
-                bg: 'pink.300',
+                bg: 'green.300',
               }}>
               投稿する
             </Button>
