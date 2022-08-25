@@ -1,15 +1,16 @@
 import { Box, ChakraStyledOptions } from '@chakra-ui/react'
 // import { StarIcon } from '@chakra-ui/icons'
 // import { Header } from '../../../components/common/Header';
-import { SidebarWithHeader } from '../../../components/common/SideBar';
+// import { SidebarWithHeader } from '../../../components/common/SideBar';
+import { Header } from '../../../components/common/Header';
 import { SearchBox } from '../../../components/common/SearchBox';
 import { useArticleLists } from '../hooks/useArticleList'
 
 export const Top = () => {
   return (
-    <SidebarWithHeader>
+    <Header>
       <MainContents />
-    </SidebarWithHeader>
+    </Header>
     );
 }
 
