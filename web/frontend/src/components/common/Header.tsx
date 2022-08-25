@@ -35,6 +35,14 @@ import {
 import { IconType } from 'react-icons';
 
 export const Header = ({children}: {children: ReactNode}) => {
+  return <HeaderBase children={children} withSidebar={false} />
+}
+
+export const HeaderWithSidebar = ({children}: {children: ReactNode}) => {
+  return <HeaderBase children={children} withSidebar={true} />
+}
+
+const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: boolean}) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
@@ -107,13 +115,22 @@ export const Header = ({children}: {children: ReactNode}) => {
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
-      <SidebarContent
-        onClose={() => onClose}
-        display={{ base: 'none', md: 'block' }}
-      />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      {withSidebar ?
+      <>
+        <SidebarContent
+          onClose={() => onClose}
+          display={{ base: 'none', md: 'block' }}
+        />
+       <Box ml={{ base: 0, md: 60 }} p="4">
+         {children}
+       </Box>
+      </>
+      :
+      <Box ml={{ base: 0, md: 10 }} p="4">
         {children}
       </Box>
+     
+      }
     </Box>
   );
 }

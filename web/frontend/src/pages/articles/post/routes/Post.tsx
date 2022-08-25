@@ -9,6 +9,7 @@ import {
   DraftEditorCommand,
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
+import { Header } from '../../../../components/common/Header';
 
 const TextEditor = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
@@ -244,7 +245,11 @@ const TextEditor = () => {
 // };
 
 export const Post = () => {
-  return <TextEditor />
+  return (
+    <Header>
+      <TextEditor />
+    </Header>
+  )
   // return (<RichEditorExample />)
   /*
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
