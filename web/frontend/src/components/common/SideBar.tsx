@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import {
+  Checkbox,
   IconButton,
   Avatar,
   Box,
@@ -7,7 +8,6 @@ import {
   Flex,
   HStack,
   VStack,
-  Icon,
   useColorModeValue,
   Link,
   Drawer,
@@ -35,11 +35,16 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 
 interface LinkItemProps {
   name: string;
-  icon: IconType;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'カテゴリから探す', icon: FiTrendingUp },
+  { name: '学問・進学' },
+  { name: '留学' },
+  { name: '就活' },
+  { name: 'インターン' },
+  { name: '部活・サークル' },
+  { name: '趣味' },
+  { name: '時事問題' },
+  { name: 'その他' },
 ];
 
 export const SidebarWithHeader = ({children}: {children: ReactNode}) => {
@@ -75,7 +80,7 @@ interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -87,13 +92,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Campusful
+        <Text fontSize="md" fontFamily="monospace" fontWeight="bold">
+          カテゴリから探す
         </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name}>
           {link.name}
         </NavItem>
       ))}
@@ -102,37 +106,20 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 };
 
 interface NavItemProps extends FlexProps {
-  icon: IconType;
   children: ReactText;
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ children, ...rest }: NavItemProps) => {
   return (
-    <Link as={ReactRouterLink} to="/articles/post" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'cyan.400',
-          color: 'white',
-        }}
-        {...rest}>
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Link>
+    <Flex
+      align="center"
+      p="2"
+      mx="2"
+      borderRadius="md"
+      role="group"
+      cursor="pointer"
+      {...rest}>
+      <Checkbox>{children}</Checkbox>
+    </Flex>
   );
 };
 
