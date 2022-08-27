@@ -32,20 +32,33 @@ import {
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom'
+import {
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+
 
 interface LinkItemProps {
   name: string;
+  checked: boolean
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: '学問・進学' },
-  { name: '留学' },
-  { name: '就活' },
-  { name: 'インターン' },
-  { name: '部活・サークル' },
-  { name: '趣味' },
-  { name: '時事問題' },
-  { name: 'その他' },
+  { name: '学問・進学', checked: false },
+  { name: '留学', checked: false},
+  { name: '就活', checked: false},
+  { name: 'インターン', checked: false },
+  { name: '部活・サークル', checked: false },
+  { name: '趣味', checked: false},
+  { name: '時事問題', checked: false },
+  { name: 'その他', checked: false},
 ];
+
+const categoryState = atom({
+  key: 'categoryState',
+  default: LinkItems
+})
 
 export const SidebarWithHeader = ({children}: {children: ReactNode}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -96,19 +109,16 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           カテゴリから探す
         </Text>
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name}>
-          {link.name}
-        </NavItem>
-      ))}
+      <CategoryNav />
     </Box>
   );
 };
 
 interface NavItemProps extends FlexProps {
-  children: ReactText;
+  props: LinkItemProps;
+  onToggle: any;
 }
-const NavItem = ({ children, ...rest }: NavItemProps) => {
+const NavItem = ({ props, onToggle, ...rest }: NavItemProps) => {
   return (
     <Flex
       align="center"
@@ -118,10 +128,37 @@ const NavItem = ({ children, ...rest }: NavItemProps) => {
       role="group"
       cursor="pointer"
       {...rest}>
-      <Checkbox>{children}</Checkbox>
+      <Checkbox
+        checked={props.checked}
+        onChange={(e) => onToggle(e, props.name, props.checked)}
+      >
+        {props.name}
+      </Checkbox>
     </Flex>
   );
 };
+
+const CategoryNav = () => {
+  const [categories, setCategories] = useRecoilState(categoryState)
+  const onToggle = (e: React.MouseEvent, name: string, checked: boolean) => {
+    e.preventDefault();
+    const newState = categories.map(category => {
+      if (category.name === name){
+        return {name, checked: !checked}
+      }
+      return category
+
+    })
+    setCategories(newState)
+  }
+  return (
+    <>
+    {categories.map((link) => (
+      <NavItem props={link} onToggle={onToggle} key={link.name} />
+    ))}
+    </>
+  )
+}
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;

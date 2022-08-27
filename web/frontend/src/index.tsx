@@ -12,6 +12,10 @@ import {
   createHttpLink,
 } from "@apollo/client"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  RecoilRoot,
+} from 'recoil';
+
 
 const link = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -28,6 +32,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
  <ApolloProvider client={client}>
+  <RecoilRoot>
    <ChakraProvider>
      <React.StrictMode>
       <Router>
@@ -38,6 +43,7 @@ root.render(
       </Router>
      </React.StrictMode>
    </ChakraProvider>
+  </RecoilRoot>
  </ApolloProvider>
 );
 
