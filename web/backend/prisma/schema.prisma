@@ -11,17 +11,44 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  name     String?
-  articles Article[]
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  name         String?
+  universityId Int?
+  articles     Article[]
+
+  university University? @relation(fields: [universityId], references: [id])
+}
+
+model University {
+  id     Int    @id @default(autoincrement())
+  name   String
+  areaId Int
+  users  User[]
+
+  author Area? @relation(fields: [areaId], references: [id])
+}
+
+model Area {
+  id           Int          @id @default(autoincrement())
+  name         String
+  universities University[]
 }
 
 model Article {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String?
+  published  Boolean? @default(false)
+  authorId   Int?
+  categoryId Int?
+
+  author   User?     @relation(fields: [authorId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Article Article[]
 }
