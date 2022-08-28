@@ -18,10 +18,17 @@ export type Scalars = {
 export type Article = {
   __typename?: 'Article';
   author: User;
+  category: Category;
   content: Scalars['String'];
   id: Scalars['ID'];
   published: Scalars['Boolean'];
   title: Scalars['String'];
+};
+
+export type Category = {
+  __typename?: 'Category';
+  id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type Mutation = {
@@ -66,7 +73,7 @@ export type User = {
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, title: string, content: string, published: boolean, author: { __typename?: 'User', id: string, name: string, email: string } }> };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, title: string, content: string, published: boolean, author: { __typename?: 'User', id: string, name: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -85,6 +92,12 @@ export const ArticlesDocument = gql`
       id
       name
       email
+      university {
+        name
+      }
+    }
+    category {
+      name
     }
   }
 }
