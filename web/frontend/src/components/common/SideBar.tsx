@@ -130,7 +130,7 @@ const NavItem = ({ props, onToggle, ...rest }: NavItemProps) => {
       {...rest}>
       <Checkbox
         checked={props.checked}
-        onChange={(e) => onToggle(e, props.name, props.checked)}
+        onChange={(e) => onToggle(e, props.name, !props.checked)}
       >
         {props.name}
       </Checkbox>
@@ -141,10 +141,9 @@ const NavItem = ({ props, onToggle, ...rest }: NavItemProps) => {
 const CategoryNav = () => {
   const [categories, setCategories] = useRecoilState(categoryState)
   const onToggle = (e: React.MouseEvent, name: string, checked: boolean) => {
-    e.preventDefault();
     const newState = categories.map(category => {
       if (category.name === name){
-        return {name, checked: !checked}
+        return {name, checked}
       }
       return category
 
