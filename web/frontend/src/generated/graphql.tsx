@@ -48,12 +48,19 @@ export type Query = {
   user: Array<User>;
 };
 
+export type University = {
+  __typename?: 'University';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   articles: Array<Article>;
   email: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  university: University;
 };
 
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
@@ -64,7 +71,7 @@ export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, name: string, email: string, articles: Array<{ __typename?: 'Article', id: string }> }> };
+export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, name: string, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
 
 
 export const ArticlesDocument = gql`
@@ -117,6 +124,9 @@ export const UsersDocument = gql`
     email
     articles {
       id
+    }
+    university {
+      name
     }
   }
 }

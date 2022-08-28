@@ -20,6 +20,12 @@ type User {
   email: String!
   name: String!
   articles: [Article!]!
+  university: University!
+}
+
+type University {
+  id: ID!
+  name: String!
 }
 
 type Mutation {

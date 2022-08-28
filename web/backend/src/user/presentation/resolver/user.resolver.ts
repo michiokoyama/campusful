@@ -8,7 +8,9 @@ export class UserResolver {
 
   @Query(() => [UserDto])
   async user() {
-    return this.prisma.user.findMany({ include: { articles: true } })
+    return this.prisma.user.findMany({
+      include: { articles: true, university: true },
+    })
   }
 
   @Mutation(() => UserDto)
