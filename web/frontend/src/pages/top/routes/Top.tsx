@@ -6,6 +6,7 @@ import {
   ChatIcon
 } from '@chakra-ui/icons';
 import { HiAcademicCap } from 'react-icons/hi'
+import { createTaggedTemplate } from 'typescript';
 
 export const Top = () => {
   return (
@@ -26,7 +27,8 @@ const MainContents = () => {
 }
 
 const ArticleLists = (props: ChakraStyledOptions) => {
-  console.log(props)
+  const createdAt = new Date(props.createdAt)
+  const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       <Box p='6'>
@@ -61,7 +63,7 @@ const ArticleLists = (props: ChakraStyledOptions) => {
         <Box mt='2' mb='5'>
           <Box display='flex' float={'left'}>
             <Box as='span' color='gray.600' fontSize='sm'>
-            投稿日: 2022/9/5
+            投稿日: {displayCreatedAt}
             </Box>
           </Box>
           <Box display='flex' float={'right'}>
