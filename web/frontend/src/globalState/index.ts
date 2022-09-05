@@ -3,18 +3,19 @@ import {
 } from 'recoil';
 
 interface LinkItemProps {
+  id: number;
   name: string;
   checked: boolean
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: '学問・進学', checked: false },
-  { name: '留学', checked: false},
-  { name: '就活', checked: false},
-  { name: 'インターン', checked: false },
-  { name: '部活・サークル', checked: false },
-  { name: '趣味', checked: false},
-  { name: '時事問題', checked: false },
-  { name: 'その他', checked: false},
+  { id: 1, name: '学問・進学', checked: false },
+  { id: 2, name: '留学', checked: false},
+  { id: 3, name: '就活', checked: false},
+  { id: 4, name: 'インターン', checked: false },
+  { id: 5, name: '部活・サークル', checked: false },
+  { id: 6, name: '趣味', checked: false},
+  { id: 7, name: '時事問題', checked: false },
+  { id: 8, name: 'その他', checked: false},
 ];
 
 export const categoryState = atom({

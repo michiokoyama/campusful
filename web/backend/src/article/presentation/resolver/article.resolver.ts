@@ -1,4 +1,3 @@
-import { Param } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { PrismaService } from 'src/prisma.service'
 import { ArticleDto } from '../dto/article.dto'

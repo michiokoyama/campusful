@@ -4,12 +4,10 @@ import {
   IconButton,
   Avatar,
   Box,
-  CloseButton,
   Flex,
   HStack,
   VStack,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
@@ -27,11 +25,8 @@ import {
   FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
-import { IconType } from 'react-icons';
 import { ReactText } from 'react';
-import { Link as ReactRouterLink } from 'react-router-dom'
 import {
-  atom,
   useRecoilState,
 } from 'recoil';
 import { categoryState } from 'globalState'
@@ -124,8 +119,9 @@ const CategoryNav = () => {
   const [categories, setCategories] = useRecoilState(categoryState)
   const onToggle = (e: React.MouseEvent, name: string, checked: boolean) => {
     const newState = categories.map(category => {
+      const id = category.id
       if (category.name === name){
-        return {name, checked}
+        return {id, name, checked}
       }
       return category
 
