@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Field, ID, ObjectType, Int, GraphQLISODateTime } from '@nestjs/graphql'
 import { UserDto } from '../../../user/presentation/dto/user.dto'
 import { CategoryDto } from '../../../category/presentation/dto/category.dto'
 
@@ -51,6 +51,16 @@ export class ArticleDto {
   })
   published!: boolean
 
+  @Field(() => Int, {
+    nullable: false,
+  })
+  thanksNum!: number
+
+  @Field(() => Int, {
+    nullable: false,
+  })
+  commentNum!: number
+
   @Field(() => UserDto, {
     nullable: false,
   })
@@ -60,4 +70,10 @@ export class ArticleDto {
     nullable: false,
   })
   category!: CategoryDto
+
+  @Field(() => GraphQLISODateTime, {
+    nullable: false,
+  })
+  createdAt!: Date
+
 }

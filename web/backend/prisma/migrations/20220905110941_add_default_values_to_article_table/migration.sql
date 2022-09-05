@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Article" ALTER COLUMN "commentNum" SET DEFAULT 0,
+ALTER COLUMN "thnaksNum" SET DEFAULT 0;

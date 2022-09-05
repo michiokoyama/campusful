@@ -4,6 +4,9 @@ query getArticles ($categoryIds: [Float!]!) {
     title
     content
     published
+    thanksNum
+    commentNum
+    createdAt
 		author {
       id
       name

@@ -13,15 +13,19 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export type Article = {
   __typename?: 'Article';
   author: User;
   category: Category;
+  commentNum: Scalars['Int'];
   content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   published: Scalars['Boolean'];
+  thanksNum: Scalars['Int'];
   title: Scalars['String'];
 };
 
@@ -80,7 +84,7 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, title: string, content: string, published: boolean, author: { __typename?: 'User', id: string, name: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, name: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -95,6 +99,9 @@ export const GetArticlesDocument = gql`
     title
     content
     published
+    thanksNum
+    commentNum
+    createdAt
     author {
       id
       name
