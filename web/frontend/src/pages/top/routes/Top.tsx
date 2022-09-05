@@ -5,6 +5,7 @@ import { useArticleLists } from '../hooks/useArticleList'
 import {
   ChatIcon
 } from '@chakra-ui/icons';
+import { HiAcademicCap } from 'react-icons/hi'
 
 export const Top = () => {
   return (
@@ -64,14 +65,19 @@ const ArticleLists = (props: ChakraStyledOptions) => {
             </Box>
           </Box>
           <Box display='flex' float={'right'}>
-           <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+            <Box as='span' ml='2' color='gray.600' fontSize='sm'>
               <ChatIcon />
               <Box as='span' paddingLeft='1' paddingRight={3}>
                 5
               </Box>
             </Box>
             <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-              13 reviews
+              <Box as='span' float={'left'} paddingTop={0.5}>
+                <HiAcademicCap size={'20px'}/>
+              </Box>
+              <Box as='span' paddingLeft='1' paddingRight={3}>
+                13
+              </Box>
             </Box>
           </Box>
         </Box>
