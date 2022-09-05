@@ -3,7 +3,7 @@ import { HeaderWithSidebar } from '../../../components/common/Header';
 import { SearchBox } from '../../../components/common/SearchBox';
 import { useArticleLists } from '../hooks/useArticleList'
 import {
-  StarIcon
+  ChatIcon
 } from '@chakra-ui/icons';
 
 export const Top = () => {
@@ -55,27 +55,24 @@ const ArticleLists = (props: ChakraStyledOptions) => {
           {props.title}
         </Box>
 
-        <Box
-          noOfLines={3}
-        >
-          {props.content}
-        </Box>
+        <Box noOfLines={3}>{props.content}</Box>
 
-        <Box display='flex' mt='2' alignItems='center'>
-          <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+        <Box mt='2' mb='5'>
+          <Box display='flex' float={'left'}>
+            <Box as='span' color='gray.600' fontSize='sm'>
             投稿日: 2022/9/5
+            </Box>
           </Box>
-
-          {Array(5)
-            .fill('')
-            .map((_, i) => (
-              <StarIcon
-                key={i}
-                color={i < 0 ? 'teal.500' : 'gray.300'}
-              />
-            ))}
-          <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-            13 reviews
+          <Box display='flex' float={'right'}>
+           <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+              <ChatIcon />
+              <Box as='span' paddingLeft='1' paddingRight={3}>
+                5
+              </Box>
+            </Box>
+            <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+              13 reviews
+            </Box>
           </Box>
         </Box>
       </Box>
