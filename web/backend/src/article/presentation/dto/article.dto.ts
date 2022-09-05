@@ -1,6 +1,24 @@
-import { Field, ID, ObjectType, Int, GraphQLISODateTime } from '@nestjs/graphql'
+import {
+  Field,
+  ID,
+  ObjectType,
+  Int,
+  GraphQLISODateTime,
+  registerEnumType,
+} from '@nestjs/graphql'
 import { UserDto } from '../../../user/presentation/dto/user.dto'
 import { CategoryDto } from '../../../category/presentation/dto/category.dto'
+
+export const GqlArticleTypeMap = {
+  Article: 'Article',
+  Question: 'Question',
+} as const
+
+export type ArticleType = keyof typeof GqlArticleTypeMap
+
+registerEnumType(GqlArticleTypeMap, {
+  name: 'ArticleType',
+})
 
 @ObjectType('Article', {
   isAbstract: true,
@@ -35,6 +53,12 @@ export class ArticleDto {
     nullable: false,
   })
   id!: number
+
+  @Field(() => GqlArticleTypeMap, {
+    nullable: false,
+  })
+  type!: ArticleType
+
 
   @Field(() => String, {
     nullable: false,

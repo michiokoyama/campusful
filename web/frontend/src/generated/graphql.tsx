@@ -27,7 +27,13 @@ export type Article = {
   published: Scalars['Boolean'];
   thanksNum: Scalars['Int'];
   title: Scalars['String'];
+  type: ArticleType;
 };
+
+export enum ArticleType {
+  Article = 'Article',
+  Question = 'Question'
+}
 
 export type Category = {
   __typename?: 'Category';
@@ -84,7 +90,7 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, name: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, name: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -96,6 +102,7 @@ export const GetArticlesDocument = gql`
     query getArticles($categoryIds: [Float!]!) {
   articles(categoryIds: $categoryIds) {
     id
+    type
     title
     content
     published

@@ -9,6 +9,7 @@ type Query {
 
 type Article {
   id: ID!
+  type: ArticleType!
   title: String!
   content: String!
   published: Boolean!
@@ -17,6 +18,11 @@ type Article {
   author: User!
   category: Category!
   createdAt: DateTime!
+}
+
+enum ArticleType {
+  Article
+  Question
 }
 
 type User {

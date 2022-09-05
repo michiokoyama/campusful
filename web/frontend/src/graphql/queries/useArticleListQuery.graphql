@@ -1,6 +1,7 @@
 query getArticles ($categoryIds: [Float!]!) {
   articles (categoryIds: $categoryIds){
     id
+    type
     title
     content
     published
