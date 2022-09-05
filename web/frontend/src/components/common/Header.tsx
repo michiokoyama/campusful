@@ -292,6 +292,8 @@ interface NavItem {
   href?: string;
 }
 
+const NAV_ITEMS = [] as Array<NavItem>
+/*
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'Inspiration',
@@ -332,3 +334,4 @@ const NAV_ITEMS: Array<NavItem> = [
     href: '#',
   },
 ];
+*/
