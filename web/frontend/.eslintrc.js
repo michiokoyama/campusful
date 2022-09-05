@@ -1,14 +1,12 @@
 // modified .eslint config
-{
-    "plugins": [
-      "react-hooks"
-    ],
-    "rules": {
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": [
-        "warn", {
-          "additionalHooks": "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
-        }
-      ]
-    }
+module.exports = {
+  "plugins": ["react-hooks"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": [
+      "warn", {
+        "additionalHooks": "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
+      }
+    ]
   }
+}

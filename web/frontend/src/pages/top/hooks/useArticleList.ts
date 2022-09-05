@@ -1,9 +1,11 @@
 import { gql } from '@apollo/client'
 import {
-  useArticlesQuery,
+  useGetArticlesQuery,
 } from '../../../generated/graphql'
 
 export const useArticleLists = () => {
-  const { data, error } = useArticlesQuery()
+  // todo: globale stateから取得する。
+  const categoryId = 1
+  const { data, error } = useGetArticlesQuery({variables: {categoryId}})
   return { data, error }
 }
