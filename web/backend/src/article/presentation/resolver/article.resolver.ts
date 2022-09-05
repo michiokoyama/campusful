@@ -8,10 +8,8 @@ export class ArticlesResolver {
   constructor(private prisma: PrismaService) {}
 
   @Query(() => [ArticleDto])
-  async articles(@Param() params: { categoryId: number }) {
-    const condition = params.categoryId
-      ? { categoryId: params.categoryId }
-      : undefined
+  async articles(@Args('categoryId') categoryId: number) {
+    const condition = categoryId ? { categoryId: categoryId } : undefined
     return this.prisma.article.findMany({
       include: { author: { include: { university: true } }, category: true },
       where: condition,

@@ -1,5 +1,5 @@
-query articles {
-  articles{
+query getArticles ($categoryId: Float!) {
+  articles (categoryId: $categoryId){
     id
     title
     content
