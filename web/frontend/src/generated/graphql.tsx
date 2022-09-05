@@ -57,7 +57,7 @@ export type Query = {
 
 
 export type QueryArticlesArgs = {
-  categoryId: Scalars['Float'];
+  categoryIds: Array<Scalars['Float']>;
 };
 
 export type University = {
@@ -76,7 +76,7 @@ export type User = {
 };
 
 export type GetArticlesQueryVariables = Exact<{
-  categoryId: Scalars['Float'];
+  categoryIds: Array<Scalars['Float']> | Scalars['Float'];
 }>;
 
 
@@ -89,8 +89,8 @@ export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'Use
 
 
 export const GetArticlesDocument = gql`
-    query getArticles($categoryId: Float!) {
-  articles(categoryId: $categoryId) {
+    query getArticles($categoryIds: [Float!]!) {
+  articles(categoryIds: $categoryIds) {
     id
     title
     content
@@ -122,7 +122,7 @@ export const GetArticlesDocument = gql`
  * @example
  * const { data, loading, error } = useGetArticlesQuery({
  *   variables: {
- *      categoryId: // value for 'categoryId'
+ *      categoryIds: // value for 'categoryIds'
  *   },
  * });
  */

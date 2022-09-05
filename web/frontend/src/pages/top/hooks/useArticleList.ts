@@ -9,7 +9,6 @@ export const useArticleLists = () => {
   const categoryIds = categories
     .filter((category) => category.checked)
     .map((category) => category.id)
-  const categoryId = 1
-  const { data, error } = useGetArticlesQuery({variables: {categoryId}})
+  const { data, error } = useGetArticlesQuery({variables: {categoryIds}})
   return { data, error }
 }
