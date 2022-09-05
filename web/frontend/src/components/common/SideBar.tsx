@@ -23,8 +23,6 @@ import {
   MenuList,
 } from '@chakra-ui/react';
 import {
-  FiHome,
-  FiTrendingUp,
   FiMenu,
   FiBell,
   FiChevronDown,
@@ -34,31 +32,15 @@ import { ReactText } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import {
   atom,
-  selector,
   useRecoilState,
-  useRecoilValue,
 } from 'recoil';
+import { categoryState } from 'globalState'
 
 
 interface LinkItemProps {
   name: string;
   checked: boolean
 }
-const LinkItems: Array<LinkItemProps> = [
-  { name: '学問・進学', checked: false },
-  { name: '留学', checked: false},
-  { name: '就活', checked: false},
-  { name: 'インターン', checked: false },
-  { name: '部活・サークル', checked: false },
-  { name: '趣味', checked: false},
-  { name: '時事問題', checked: false },
-  { name: 'その他', checked: false},
-];
-
-const categoryState = atom({
-  key: 'categoryState',
-  default: LinkItems
-})
 
 export const SidebarWithHeader = ({children}: {children: ReactNode}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
