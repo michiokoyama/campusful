@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react';
+import { useRecoilValue } from "recoil"
 import {
   Editor,
   EditorState,
@@ -10,10 +11,12 @@ import { Header } from '../../../../components/common/Header';
 import {
   Box,
   Button,
+  Input,
   List,
   ListItem,
   ListIcon,
   Flex,
+  Select,
   Tabs,
   TabList,
   Tab,
@@ -21,12 +24,7 @@ import {
   TabPanels,
 } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md'
-/*
-import {
-  MdCheckCircle 
-} from '@chakra-ui/icons';
-*/
-
+import { categoryState } from "../../../../globalState"
 
 const InlineButtons = [
   {type: "BOLD", text: "bold"},
@@ -45,6 +43,8 @@ const PostBody = () => {
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       <SelectArticleType />
+      <SelectArticleCategory />
+      <ArticleTitle />
       <TextEditor />
     </Box>
   )
@@ -96,7 +96,28 @@ const SelectArticleType = () => {
       </TabPanels>
     </Tabs>
   )
+}
 
+// 記事のカテゴリ（学問、留学、サークルなど）
+const SelectArticleCategory = () => {
+  const categories = useRecoilValue(categoryState)
+  return (
+    <Flex p={1} alignItems={'center'}>
+      <Box>【必須】カテゴリを入力してください。</Box>
+      <Select maxW={150}>
+        {categories.map((category) => {
+          return (<option value={category.id}>{category.name}</option>)
+        })}
+      </Select>
+    </Flex>
+  )
+}
+
+// 記事のカテゴリ（学問、留学、サークルなど）
+const ArticleTitle = () => {
+  return (
+    <Input p={1} placeholder='タイトルを入力してください。' />
+  )
 }
 
 const TextEditor = () => {
