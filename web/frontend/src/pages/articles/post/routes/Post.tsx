@@ -10,8 +10,23 @@ import { Header } from '../../../../components/common/Header';
 import {
   Box,
   Button,
+  List,
+  ListItem,
+  ListIcon,
   Flex,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  TabPanels,
 } from '@chakra-ui/react';
+import { MdCheckCircle } from 'react-icons/md'
+/*
+import {
+  MdCheckCircle 
+} from '@chakra-ui/icons';
+*/
+
 
 const InlineButtons = [
   {type: "BOLD", text: "bold"},
@@ -26,6 +41,63 @@ const BlockStyleButtons = [
   {type: "unstyled", text: "Normal"},
 ]
 
+const PostBody = () => {
+  return (
+    <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+      <SelectArticleType />
+      <TextEditor />
+    </Box>
+  )
+}
+
+// 記事 or 質問
+const SelectArticleType = () => {
+  return (
+    <Tabs>
+      <TabList>
+        <Tab>
+          記事を投稿する
+        </Tab>
+        <Tab>
+          質問をする
+        </Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+          <p>良い記事を書くコツ</p>
+          <List>
+            <ListItem>
+              <ListIcon as={MdCheckCircle} color='green.500' />
+              書き始める前に全体の章立てを設計しましょう。
+            </ListItem>
+            <ListItem>
+              <ListIcon as={MdCheckCircle} color='green.500' />
+              記事を通して、どういった人に何を伝えたいのかを予めイメージしましょう。
+            </ListItem>
+            <ListItem>
+              <ListIcon as={MdCheckCircle} color='green.500' />
+              背景や前提条件、具体的な手順は丁寧に書きましょう。
+            </ListItem>
+          </List>
+        </TabPanel>
+        <TabPanel>
+          <p>良い質問をするコツ</p>
+          <List>
+            <ListItem>
+              <ListIcon as={MdCheckCircle} color='green.500' />
+              知りたいことを具体的に記述しましょう。
+            </ListItem>
+            <ListItem>
+              <ListIcon as={MdCheckCircle} color='green.500' />
+              それを知りたい背景や前提条件も具体的に記述しましょう。
+            </ListItem>
+          </List>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  )
+
+}
 
 const TextEditor = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
@@ -86,7 +158,7 @@ const TextEditor = () => {
 export const Post = () => {
   return (
     <Header>
-      <TextEditor />
+      <PostBody />
     </Header>
   )
 }
