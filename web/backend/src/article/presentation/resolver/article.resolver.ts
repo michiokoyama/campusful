@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver, Float } from '@nestjs/graphql'
 import { PrismaService } from 'src/prisma.service'
-import { ArticleDto } from '../dto/article.dto'
+import { ArticleDto, ArticleType } from '../dto/article.dto'
 
 @Resolver(() => ArticleDto)
 export class ArticlesResolver {
@@ -10,7 +10,8 @@ export class ArticlesResolver {
   async articles(
     @Args({ name: 'categoryIds', type: () => [Float] }) categoryIds: number[],
   ) {
-    const condition = categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : undefined
+    const condition =
+      categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : undefined
     return this.prisma.article.findMany({
       include: { author: { include: { university: true } }, category: true },
       where: condition,
@@ -21,7 +22,16 @@ export class ArticlesResolver {
   async createarticle(
     @Args('title') title: string,
     @Args('content') content: string,
+    // @Args('type') type: ArticleType,
+    // @Args('categoryId') categoryId: number,
   ) {
-    return this.prisma.article.create({ data: { title, content } })
+    return this.prisma.article.create({
+      data: { 
+        title,
+        content,
+        // type,
+        // categoryId
+      },
+    })
   }
 }

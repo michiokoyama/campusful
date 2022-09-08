@@ -1,0 +1,9 @@
+mutation CreateArticle {
+  createarticle(
+    title: "mutationテスト",
+    content: "テスト本文",
+  ){
+    title
+    content
+  }
+}

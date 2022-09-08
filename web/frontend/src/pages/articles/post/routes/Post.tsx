@@ -26,6 +26,7 @@ import {
 } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md'
 import { categoryState } from "../../../../globalState"
+import { useCreateArticle} from "../hooks/useCreateArticle"
 
 const InlineButtons = [
   {type: "BOLD", text: "bold"},
@@ -124,6 +125,8 @@ const ArticleTitle = () => {
 
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ShipItButton = () => {
+  const { createArticleMutation, data, loading, error } = useCreateArticle()
+  const handleShipIt = () => createArticleMutation()
   return (
     <Stack
       flex={{ base: 1, md: 0 }}
@@ -151,7 +154,9 @@ const ShipItButton = () => {
         bg={'pink.400'}
         _hover={{
           bg: 'green.300',
-        }}>
+        }}
+        onClick={handleShipIt}
+      >
         投稿する
       </Button>
     </Stack>
