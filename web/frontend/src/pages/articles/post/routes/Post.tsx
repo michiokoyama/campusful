@@ -17,6 +17,7 @@ import {
   ListIcon,
   Flex,
   Select,
+  Stack,
   Tabs,
   TabList,
   Tab,
@@ -46,6 +47,7 @@ const PostBody = () => {
       <SelectArticleCategory />
       <ArticleTitle />
       <TextEditor />
+      <ShipItButton />
     </Box>
   )
 }
@@ -118,6 +120,42 @@ const ArticleTitle = () => {
   return (
     <Input p={1} placeholder='タイトルを入力してください。' />
   )
+}
+
+// 記事のカテゴリ（学問、留学、サークルなど）
+const ShipItButton = () => {
+  return (
+    <Stack
+      flex={{ base: 1, md: 0 }}
+      justify={'flex-end'}
+      direction={'row'}
+      spacing={6}>
+     <Button
+        display={{ base: 'none', md: 'inline-flex' }}
+        fontSize={'sm'}
+        fontWeight={600}
+        color={'gray'}
+        backgroundColor={'white'}
+        bg={'pink.400'}
+        _hover={{
+          bg: 'green.300',
+        }}>
+        キャンセル
+      </Button>
+     <Button
+        display={{ base: 'none', md: 'inline-flex' }}
+        fontSize={'sm'}
+        fontWeight={600}
+        color={'white'}
+        backgroundColor={'#98a820'}
+        bg={'pink.400'}
+        _hover={{
+          bg: 'green.300',
+        }}>
+        投稿する
+      </Button>
+    </Stack>
+ )
 }
 
 const TextEditor = () => {
