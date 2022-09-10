@@ -32,6 +32,7 @@ import {
   categoryState,
   currentCategoryIdState,
   currentArticleTypeState,
+  currentArticleTitleState,
  } from "../../../../globalState"
 import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
@@ -136,8 +137,16 @@ const SelectArticleCategory = () => {
 
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ArticleTitle = () => {
+  const [currentArticleTitle, setCurrentArticleTitle] = useRecoilState(currentArticleTitleState)
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentArticleTitle(e.target.value)
+  }
   return (
-    <Input p={1} placeholder='タイトルを入力してください。' />
+    <Input p={1} 
+      placeholder='タイトルを入力してください。'
+      onChange={(e) => handleOnChange(e)}
+      value={currentArticleTitle}
+    />
   )
 }
 
@@ -145,8 +154,9 @@ const ArticleTitle = () => {
 const ShipItButton = () => {
   const currentCategoryId = useRecoilValue(currentCategoryIdState)
   const currentArticleType = useRecoilValue(currentArticleTypeState)
+  const currentArticleTitle = useRecoilValue(currentArticleTitleState)
   const { createArticleMutation, data, loading, error } = useCreateArticle({variables: {
-    title: `タイトルテスト ${new Date().toISOString()}`,
+    title: currentArticleTitle,
     content: `本文テスト ${new Date().toISOString()}`,
     type: currentArticleType,
     categoryId: currentCategoryId,

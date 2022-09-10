@@ -32,3 +32,8 @@ export const currentArticleTypeState = atom({
   key: 'currentArticleTypeState',
   default: 'Article',
 })
+
+export const currentArticleTitleState = atom({
+  key: 'currentArticleTitleState',
+  default: '',
+})
