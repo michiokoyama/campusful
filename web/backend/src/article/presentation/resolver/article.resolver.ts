@@ -24,7 +24,6 @@ export class ArticlesResolver {
     @Args('title') title: string,
     @Args('content') content: string,
     @Args('type') type: ArticleType,
-    @Args('commentNum') commentNum: number,
     @Args('categoryId') categoryId: number,
     @Args('authorId') authorId: number,
   ) {
@@ -33,7 +32,6 @@ export class ArticlesResolver {
         title,
         content,
         type,
-        commentNum,
         category: { connect: { id: categoryId } },
         author: { connect: { id: authorId } },
       },

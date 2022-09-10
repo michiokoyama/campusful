@@ -51,7 +51,6 @@ export type Mutation = {
 export type MutationCreatearticleArgs = {
   authorId: Scalars['Float'];
   categoryId: Scalars['Float'];
-  commentNum: Scalars['Float'];
   content: Scalars['String'];
   title: Scalars['String'];
   type: Scalars['String'];
@@ -89,10 +88,12 @@ export type User = {
   university: University;
 };
 
-export type CreateArticleMutationVariables = Exact<{ [key: string]: never; }>;
+export type CreateArticleMutationVariables = Exact<{
+  title: Scalars['String'];
+}>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, commentNum: number, category: { __typename?: 'Category', id: string }, author: { __typename?: 'User', id: string } } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, category: { __typename?: 'Category', id: string }, author: { __typename?: 'User', id: string } } };
 
 export type GetArticlesQueryVariables = Exact<{
   categoryIds: Array<Scalars['Float']> | Scalars['Float'];
@@ -108,19 +109,17 @@ export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'Use
 
 
 export const CreateArticleDocument = gql`
-    mutation CreateArticle {
+    mutation CreateArticle($title: String!) {
   createarticle(
-    title: "mutationテスト"
+    title: $title
     content: "テスト本文"
     type: "Article"
-    commentNum: 1
     categoryId: 1
     authorId: 1
   ) {
     title
     content
     type
-    commentNum
     category {
       id
     }
@@ -145,6 +144,7 @@ export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutat
  * @example
  * const [createArticleMutation, { data, loading, error }] = useCreateArticleMutation({
  *   variables: {
+ *      title: // value for 'title'
  *   },
  * });
  */

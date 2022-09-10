@@ -125,7 +125,9 @@ const ArticleTitle = () => {
 
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ShipItButton = () => {
-  const { createArticleMutation, data, loading, error } = useCreateArticle()
+  const { createArticleMutation, data, loading, error } = useCreateArticle({variables: {
+    title: `タイトルテスト ${new Date().toDateString()}`
+  }})
   const handleShipIt = () => createArticleMutation()
   return (
     <Stack

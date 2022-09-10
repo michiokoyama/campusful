@@ -1,6 +1,6 @@
-mutation CreateArticle {
+mutation CreateArticle($title: String!) {
   createarticle(
-    title: "mutationテスト",
+    title: $title,
     content: "テスト本文",
     type: "Article",
     categoryId: 1,
