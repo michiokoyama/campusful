@@ -22,3 +22,13 @@ export const categoryState = atom({
   key: 'categoryState',
   default: LinkItems
 })
+
+export const currentCategoryIdState = atom({
+  key: 'currentCategoryIdState',
+  default: 1,
+})
+
+export const currentArticleTypeState = atom({
+  key: 'currentArticleTypeState',
+  default: 'Article',
+})

@@ -1,5 +1,8 @@
 import React, { ReactNode, useState } from 'react';
-import { useRecoilValue } from "recoil"
+import { 
+  useRecoilState,
+  useRecoilValue 
+} from "recoil"
 import {
   Editor,
   EditorState,
@@ -25,8 +28,13 @@ import {
   TabPanels,
 } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md'
-import { categoryState } from "../../../../globalState"
+import { 
+  categoryState,
+  currentCategoryIdState,
+  currentArticleTypeState,
+ } from "../../../../globalState"
 import { useCreateArticle} from "../hooks/useCreateArticle"
+import { ArticleType } from 'generated/graphql';
 
 const InlineButtons = [
   {type: "BOLD", text: "bold"},
@@ -55,13 +63,18 @@ const PostBody = () => {
 
 // 記事 or 質問
 const SelectArticleType = () => {
+  const [currentArticleType, setCurrentArticleType] = useRecoilState(currentArticleTypeState)
+  const handleOnClick = (articleType: ArticleType) => {
+    setCurrentArticleType(articleType)
+  }
+
   return (
     <Tabs>
       <TabList>
-        <Tab>
+        <Tab data-value='Article' onClick={() => handleOnClick(ArticleType.Article)}>
           記事を投稿する
         </Tab>
-        <Tab>
+        <Tab data-value='Question' onClick={() => handleOnClick(ArticleType.Question)}>
           質問をする
         </Tab>
       </TabList>
@@ -103,13 +116,18 @@ const SelectArticleType = () => {
 
 // 記事のカテゴリ（学問、留学、サークルなど）
 const SelectArticleCategory = () => {
+  const [currentCategoryId, setCurrentCategoryId] = useRecoilState(currentCategoryIdState)
   const categories = useRecoilValue(categoryState)
+  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrentCategoryId(Number(e.target.value))
+  }
   return (
     <Flex p={1} alignItems={'center'}>
       <Box>【必須】カテゴリを入力してください。</Box>
-      <Select maxW={150}>
+      <Select maxW={150} onChange={(e) => handleOnChange(e)}>
         {categories.map((category) => {
-          return (<option value={category.id}>{category.name}</option>)
+          const selected = category.id === currentCategoryId ? true : false
+          return (<option value={category.id} selected={selected}>{category.name}</option>)
         })}
       </Select>
     </Flex>
@@ -125,11 +143,13 @@ const ArticleTitle = () => {
 
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ShipItButton = () => {
+  const currentCategoryId = useRecoilValue(currentCategoryIdState)
+  const currentArticleType = useRecoilValue(currentArticleTypeState)
   const { createArticleMutation, data, loading, error } = useCreateArticle({variables: {
     title: `タイトルテスト ${new Date().toISOString()}`,
     content: `本文テスト ${new Date().toISOString()}`,
-    type: "Article",
-    categoryId: 1,
+    type: currentArticleType,
+    categoryId: currentCategoryId,
     authorId: 1,
   }})
   const handleShipIt = () => createArticleMutation()
