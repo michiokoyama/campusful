@@ -1,10 +1,16 @@
-mutation CreateArticle($title: String!) {
+mutation CreateArticle(
+  $title: String!
+  $content: String!
+  $type: String!
+  $categoryId: Float!
+  $authorId: Float!
+) {
   createarticle(
     title: $title,
-    content: "テスト本文",
-    type: "Article",
-    categoryId: 1,
-    authorId: 1,
+    content: $content,
+    type: $type,
+    categoryId: $categoryId,
+    authorId: $authorId,
   ){
     title
     content

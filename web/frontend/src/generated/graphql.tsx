@@ -90,6 +90,10 @@ export type User = {
 
 export type CreateArticleMutationVariables = Exact<{
   title: Scalars['String'];
+  content: Scalars['String'];
+  type: Scalars['String'];
+  categoryId: Scalars['Float'];
+  authorId: Scalars['Float'];
 }>;
 
 
@@ -109,13 +113,13 @@ export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'Use
 
 
 export const CreateArticleDocument = gql`
-    mutation CreateArticle($title: String!) {
+    mutation CreateArticle($title: String!, $content: String!, $type: String!, $categoryId: Float!, $authorId: Float!) {
   createarticle(
     title: $title
-    content: "テスト本文"
-    type: "Article"
-    categoryId: 1
-    authorId: 1
+    content: $content
+    type: $type
+    categoryId: $categoryId
+    authorId: $authorId
   ) {
     title
     content
@@ -145,6 +149,10 @@ export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutat
  * const [createArticleMutation, { data, loading, error }] = useCreateArticleMutation({
  *   variables: {
  *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      type: // value for 'type'
+ *      categoryId: // value for 'categoryId'
+ *      authorId: // value for 'authorId'
  *   },
  * });
  */

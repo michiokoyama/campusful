@@ -126,7 +126,11 @@ const ArticleTitle = () => {
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ShipItButton = () => {
   const { createArticleMutation, data, loading, error } = useCreateArticle({variables: {
-    title: `タイトルテスト ${new Date().toDateString()}`
+    title: `タイトルテスト ${new Date().toISOString()}`,
+    content: `本文テスト ${new Date().toISOString()}`,
+    type: "Article",
+    categoryId: 1,
+    authorId: 1,
   }})
   const handleShipIt = () => createArticleMutation()
   return (
