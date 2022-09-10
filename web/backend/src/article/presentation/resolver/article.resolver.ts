@@ -1,4 +1,5 @@
 import { Args, Mutation, Query, Resolver, Float } from '@nestjs/graphql'
+import { create } from 'domain'
 import { PrismaService } from 'src/prisma.service'
 import { ArticleDto, ArticleType } from '../dto/article.dto'
 
@@ -22,15 +23,20 @@ export class ArticlesResolver {
   async createarticle(
     @Args('title') title: string,
     @Args('content') content: string,
-    // @Args('type') type: ArticleType,
-    // @Args('categoryId') categoryId: number,
+    @Args('type') type: ArticleType,
+    @Args('commentNum') commentNum: number,
+    @Args('id') id: number,
+    // @Args('authorId') authorId: number,
   ) {
     return this.prisma.article.create({
-      data: { 
+      data: {
         title,
         content,
-        // type,
-        // categoryId
+        type,
+        commentNum,
+        category: { connect: { id } },
+        // categoryId,
+        // authorId,
       },
     })
   }

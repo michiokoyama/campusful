@@ -2,8 +2,16 @@ mutation CreateArticle {
   createarticle(
     title: "mutationテスト",
     content: "テスト本文",
+    type: "Article",
+    commentNum: 1,
+    id: 1,
   ){
     title
     content
+    type
+    commentNum
+    category {
+      id: id
+    }
   }
 }
