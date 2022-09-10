@@ -25,8 +25,8 @@ export class ArticlesResolver {
     @Args('content') content: string,
     @Args('type') type: ArticleType,
     @Args('commentNum') commentNum: number,
-    @Args('id') id: number,
-    // @Args('authorId') authorId: number,
+    @Args('categoryId') categoryId: number,
+    @Args('authorId') authorId: number,
   ) {
     return this.prisma.article.create({
       data: {
@@ -34,9 +34,8 @@ export class ArticlesResolver {
         content,
         type,
         commentNum,
-        category: { connect: { id } },
-        // categoryId,
-        // authorId,
+        category: { connect: { id: categoryId } },
+        author: { connect: { id: authorId } },
       },
     })
   }

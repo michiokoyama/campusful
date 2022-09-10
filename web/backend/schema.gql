@@ -49,6 +49,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  createarticle(title: String!, content: String!, type: String!, commentNum: Float!, id: Float!): Article!
+  createarticle(title: String!, content: String!, type: String!, commentNum: Float!, categoryId: Float!, authorId: Float!): Article!
   createuser(name: String!, email: String!): User!
 }

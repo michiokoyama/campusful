@@ -3,15 +3,17 @@ mutation CreateArticle {
     title: "mutationテスト",
     content: "テスト本文",
     type: "Article",
-    commentNum: 1,
-    id: 1,
+    categoryId: 1,
+    authorId: 1,
   ){
     title
     content
     type
-    commentNum
     category {
-      id: id
+      id
+    }
+    author {
+      id
     }
   }
 }

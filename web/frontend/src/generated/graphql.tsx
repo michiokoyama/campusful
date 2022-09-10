@@ -49,9 +49,10 @@ export type Mutation = {
 
 
 export type MutationCreatearticleArgs = {
+  authorId: Scalars['Float'];
+  categoryId: Scalars['Float'];
   commentNum: Scalars['Float'];
   content: Scalars['String'];
-  id: Scalars['Float'];
   title: Scalars['String'];
   type: Scalars['String'];
 };
@@ -91,7 +92,7 @@ export type User = {
 export type CreateArticleMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, commentNum: number, category: { __typename?: 'Category', id: string } } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, commentNum: number, category: { __typename?: 'Category', id: string }, author: { __typename?: 'User', id: string } } };
 
 export type GetArticlesQueryVariables = Exact<{
   categoryIds: Array<Scalars['Float']> | Scalars['Float'];
@@ -113,14 +114,18 @@ export const CreateArticleDocument = gql`
     content: "テスト本文"
     type: "Article"
     commentNum: 1
-    id: 1
+    categoryId: 1
+    authorId: 1
   ) {
     title
     content
     type
     commentNum
     category {
-      id: id
+      id
+    }
+    author {
+      id
     }
   }
 }
