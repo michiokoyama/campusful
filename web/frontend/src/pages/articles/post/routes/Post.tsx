@@ -84,7 +84,7 @@ const SelectArticleType = () => {
           <p>良い記事を書くコツ</p>
           <List>
             <ListItem>
-              <ListIcon as={MdCheckCircle} color='green.500' />
+              <ListIcon as={MdCheckCircle} color='green.500'/>
               書き始める前に全体の章立てを設計しましょう。
             </ListItem>
             <ListItem>
@@ -127,8 +127,8 @@ const SelectArticleCategory = () => {
       <Box>【必須】カテゴリを入力してください。</Box>
       <Select maxW={150} onChange={(e) => handleOnChange(e)}>
         {categories.map((category) => {
-          const selected = category.id === currentCategoryId ? true : false
-          return (<option value={category.id} selected={selected}>{category.name}</option>)
+          const defaultValue = category.id === currentCategoryId ? category.id : ''
+          return (<option value={category.id} defaultValue={defaultValue} key={category.id} >{category.name}</option>)
         })}
       </Select>
     </Flex>
@@ -234,13 +234,13 @@ const TextEditor = () => {
         redo
       </Button>
       <Flex>
-      {BlockStyleButtons.map(button => {
-        return <Button onMouseDown={(e) => handleBlockClick(e, button.type)}>{button.text}</Button>
+      {BlockStyleButtons.map((button, idx) => {
+        return <Button onMouseDown={(e) => handleBlockClick(e, button.type)} key={idx}>{button.text}</Button>
       })}
       </Flex>
       <Flex>
-      {InlineButtons.map(button => {
-        return <Button onMouseDown={(e) => handleToggleClick(e, button.type)}>{button.text}</Button>
+      {InlineButtons.map((button, idx) => {
+        return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}>{button.text}</Button>
       })}
       <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>Ordered List</Button>
       <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>Unordered List</Button>
