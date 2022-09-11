@@ -37,6 +37,10 @@ import {
   MdFormatListBulleted,
   MdFormatListNumbered,
 } from 'react-icons/md'
+import {
+  BiUndo,
+  BiRedo,
+} from 'react-icons/bi'
 import { 
   categoryState,
   currentCategoryIdState,
@@ -56,7 +60,6 @@ const InlineButtons = [
 const BlockStyleButtons = [
   {type: "header-one", text: "H1"},
   {type: "header-two", text: "H2"},
-  {type: "header-three", text: "H3"},
   {type: "unstyled", text: "Normal"},
 ]
 
@@ -241,38 +244,36 @@ const TextEditor = () => {
 
   return (
     <>
-      <Button
-        disabled={editorState.getUndoStack().size <= 0}
-        onMouseDown={() => setEditorState(EditorState.undo(editorState))}>
-        undo
-      </Button>
-      <Button
-        disabled={editorState.getRedoStack().size <= 0}
-        onMouseDown={() => setEditorState(EditorState.redo(editorState))}>
-        redo
-      </Button>
       <Flex>
-      {BlockStyleButtons.map((button, idx) => {
-        return <Button onMouseDown={(e) => handleBlockClick(e, button.type)} key={idx}>{button.text}</Button>
-      })}
+        <Button
+          disabled={editorState.getUndoStack().size <= 0}
+          onMouseDown={() => setEditorState(EditorState.undo(editorState))}>
+          <Icon as={BiUndo} w={5} h={5} />
+        </Button>
+        <Button
+          disabled={editorState.getRedoStack().size <= 0}
+          onMouseDown={() => setEditorState(EditorState.redo(editorState))}>
+          <Icon as={BiRedo} w={5} h={5} />
+        </Button>
+        {BlockStyleButtons.map((button, idx) => {
+          return <Button onMouseDown={(e) => handleBlockClick(e, button.type)} key={idx}>{button.text}</Button>
+        })}
+        {InlineButtons.map((button, idx) => {
+          return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}><Icon as={button.icon} w={5} h={5} /></Button>
+        })}
+        <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
+          <Icon as={MdFormatListBulleted} w={5} h={5} />
+        </Button>
+        <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>
+          <Icon as={MdFormatListNumbered}  w={5} h={5} />
+        </Button>
       </Flex>
-      <Flex>
-      {InlineButtons.map((button, idx) => {
-        return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}><Icon as={button.icon} w={5} h={5} /></Button>
-      })}
-      <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
-        <Icon as={MdFormatListBulleted} w={5} h={5} />
-      </Button>
-      <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>
-        <Icon as={MdFormatListNumbered}  w={5} h={5} />
-      </Button>
-      </Flex>
-      <Box
-        borderWidth='2px'
-        height='70vh'
-      >
-        <Editor editorState={editorState} onChange={(e) => handleOnChange(e)} handleKeyCommand={handleKeyCommand} />
-      </Box>
+        <Box
+          borderWidth='2px'
+          height='70vh'
+        >
+          <Editor editorState={editorState} onChange={(e) => handleOnChange(e)} handleKeyCommand={handleKeyCommand} />
+        </Box>
     </>
   );
 }
