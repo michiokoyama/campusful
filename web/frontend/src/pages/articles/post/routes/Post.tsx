@@ -10,6 +10,7 @@ import {
   DraftEditorCommand,
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
+import { stateToHTML } from "draft-js-export-html";
 import { Header } from '../../../../components/common/Header';
 import {
   Box,
@@ -33,6 +34,7 @@ import {
   currentCategoryIdState,
   currentArticleTypeState,
   currentArticleTitleState,
+  currentArticleContentState,
  } from "../../../../globalState"
 import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
@@ -155,9 +157,11 @@ const ShipItButton = () => {
   const currentCategoryId = useRecoilValue(currentCategoryIdState)
   const currentArticleType = useRecoilValue(currentArticleTypeState)
   const currentArticleTitle = useRecoilValue(currentArticleTitleState)
+  const currentArticleContent = useRecoilValue(currentArticleContentState)
+
   const { createArticleMutation, data, loading, error } = useCreateArticle({variables: {
     title: currentArticleTitle,
-    content: `本文テスト ${new Date().toISOString()}`,
+    content: currentArticleContent,
     type: currentArticleType,
     categoryId: currentCategoryId,
     authorId: 1,
@@ -201,6 +205,12 @@ const ShipItButton = () => {
 
 const TextEditor = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
+  const [currentArticleContent, setCurrentArticleContent] = useRecoilState(currentArticleContentState)
+  const handleOnChange = (e: React.SetStateAction<EditorState>) => {
+    setEditorState(e)
+    const contentHtml = stateToHTML(editorState.getCurrentContent())
+    setCurrentArticleContent(contentHtml)
+  }
 
   const handleKeyCommand = (command: DraftEditorCommand) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -249,7 +259,7 @@ const TextEditor = () => {
         borderWidth='2px'
         height='70vh'
       >
-        <Editor editorState={editorState} onChange={setEditorState} handleKeyCommand={handleKeyCommand} />
+        <Editor editorState={editorState} onChange={(e) => handleOnChange(e)} handleKeyCommand={handleKeyCommand} />
       </Box>
     </>
   );
