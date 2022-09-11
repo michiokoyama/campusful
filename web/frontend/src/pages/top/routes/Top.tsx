@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/icons';
 import { HiAcademicCap } from 'react-icons/hi'
 import { createTaggedTemplate } from 'typescript';
+import sanitizeHtml from 'sanitize-html'
 
 export const Top = () => {
   return (
@@ -58,7 +59,7 @@ const ArticleLists = (props: ChakraStyledOptions) => {
           {props.title}
         </Box>
 
-        <Box noOfLines={3}>{props.content}</Box>
+        <Box noOfLines={3} dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content)}}></Box>
 
         <Box mt='2' mb='5'>
           <Box display='flex' float={'left'}>
