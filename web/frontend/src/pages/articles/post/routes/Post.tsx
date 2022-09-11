@@ -20,6 +20,7 @@ import {
   ListItem,
   ListIcon,
   Flex,
+  Icon,
   Select,
   Stack,
   Tabs,
@@ -28,7 +29,14 @@ import {
   TabPanel,
   TabPanels,
 } from '@chakra-ui/react';
-import { MdCheckCircle } from 'react-icons/md'
+import {
+  MdCheckCircle,
+  MdFormatBold,
+  MdFormatItalic,
+  MdFormatStrikethrough,
+  MdFormatListBulleted,
+  MdFormatListNumbered,
+} from 'react-icons/md'
 import { 
   categoryState,
   currentCategoryIdState,
@@ -40,9 +48,9 @@ import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
 
 const InlineButtons = [
-  {type: "BOLD", text: "bold"},
-  {type: "ITALIC", text: "italic"},
-  {type: "STRIKETHROUGH", text: "strikthrough"},
+  {type: "BOLD", text: "bold", icon: MdFormatBold},
+  {type: "ITALIC", text: "italic", icon: MdFormatItalic},
+  {type: "STRIKETHROUGH", text: "strikthrough", icon: MdFormatStrikethrough},
 ]
 
 const BlockStyleButtons = [
@@ -250,10 +258,14 @@ const TextEditor = () => {
       </Flex>
       <Flex>
       {InlineButtons.map((button, idx) => {
-        return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}>{button.text}</Button>
+        return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}><Icon as={button.icon} w={5} h={5} /></Button>
       })}
-      <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>Ordered List</Button>
-      <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>Unordered List</Button>
+      <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
+        <Icon as={MdFormatListBulleted} w={5} h={5} />
+      </Button>
+      <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>
+        <Icon as={MdFormatListNumbered}  w={5} h={5} />
+      </Button>
       </Flex>
       <Box
         borderWidth='2px'
