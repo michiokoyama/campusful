@@ -237,8 +237,7 @@ const TextEditor = () => {
     {type: "STRIKETHROUGH", text: "strikthrough", icon: MdFormatStrikethrough},
   ]
   const BlockStyleButtons: DraftButtons[] = [
-    {type: "header-one", text: "H1"},
-    {type: "header-two", text: "H2"},
+    {type: "header-one", text: "見出し"},
   ]
 
   const handleOnChange = (e: React.SetStateAction<EditorState>) => {
@@ -256,24 +255,38 @@ const TextEditor = () => {
     return "not-handled";
   };
 
-  const handleToggleClick = (e: React.MouseEvent, inlineStyle: ButtonTypeString) => {
+  // Inline Style (bold, italic, ...)
+  const handleInlineClick = (e: React.MouseEvent, inlineStyle: ButtonTypeString) => {
     e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-    toggleButtons(inlineStyle)
+    toggleInlineButtons(inlineStyle)
   };
-
-  const handleBlockClick = (e: React.MouseEvent, blockType: ButtonTypeString) => {
-    e.preventDefault();
-    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
-    toggleButtons(blockType)
-  };
-  const toggleButtons = (type: ButtonTypeString) => {
+  const toggleInlineButtons = (type: ButtonTypeString) => {
     const inlineStyle = editorState.getCurrentInlineStyle()
     // このstateはdraft.js側のstateと合わせる必要がある。
     buttonToggleState[type] = !inlineStyle.has(type)
     setButtonToggle(buttonToggleState)
   }
-  const getButtonColor = (type: ButtonTypeString) => {
+  const getInlineButtonColor = (type: ButtonTypeString) => {
+    return buttonToggleState[type] ? 'blue' : ''
+  }
+
+  // Block Style (h1, h2, orderd-list, ...)
+  const handleBlockClick = (e: React.MouseEvent, blockType: ButtonTypeString) => {
+    e.preventDefault();
+    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+    toggleBlockButtons(blockType)
+  };
+  const toggleBlockButtons = (type: ButtonTypeString) => {
+    const selection = editorState.getSelection()
+    const blockStyle = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType()
+    console.log(blockStyle)
+    // このstateはdraft.js側のstateと合わせる必要がある。
+    buttonToggleState[type] = !(type === blockStyle)
+    setButtonToggle(buttonToggleState)
+  }
+  const getBlockButtonColor = (type: ButtonTypeString) => {
+    // todo: 現在のblockに対して実行する
     return buttonToggleState[type] ? 'blue' : ''
   }
 
@@ -284,12 +297,12 @@ const TextEditor = () => {
           return <Button
             onMouseDown={(e) => handleBlockClick(e, button.type)}
             key={idx}>
-            <Box color={getButtonColor(button.type)}>{button.text}</Box>
+            <Box color={getBlockButtonColor(button.type)}>{button.text}</Box>
           </Button>
         })}
         {InlineButtons.map((button, idx) => {
-          return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}>
-            <Icon as={button.icon} w={5} h={5} color={getButtonColor(button.type)} />
+          return <Button onMouseDown={(e) => handleInlineClick(e, button.type)} key={idx}>
+            <Icon as={button.icon} w={5} h={5} color={getInlineButtonColor(button.type)} />
           </Button>
         })}
         <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
