@@ -8,7 +8,10 @@ import {
   EditorState,
   RichUtils,
   DraftEditorCommand,
+  DefaultDraftBlockRenderMap,
+  ContentBlock,
 } from 'draft-js';
+import { Map } from 'immutable'
 import 'draft-js/dist/Draft.css';
 import { stateToHTML } from "draft-js-export-html";
 import { Header } from '../../../../components/common/Header';
@@ -20,6 +23,7 @@ import {
   ListItem,
   ListIcon,
   Flex,
+  Heading,
   Icon,
   Select,
   Stack,
@@ -290,6 +294,13 @@ const TextEditor = () => {
     const blockStyle = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType()
     return type === blockStyle ? 'blue' : ''
   }
+  const blockRenderMap = Map({
+    'header-one': {
+      element: 'h1',
+      wrapper: <Heading />,
+    }
+  })
+  const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
   return (
     <>
@@ -328,7 +339,12 @@ const TextEditor = () => {
           borderWidth='2px'
           height='70vh'
         >
-          <Editor editorState={editorState} onChange={(e) => handleOnChange(e)} handleKeyCommand={handleKeyCommand} />
+          <Editor
+            editorState={editorState}
+            onChange={(e) => handleOnChange(e)}
+            handleKeyCommand={handleKeyCommand}
+            blockRenderMap={extendedBlockRenderMap}
+          />
         </Box>
     </>
   );

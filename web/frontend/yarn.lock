@@ -3176,6 +3176,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/immutable@^3.8.7":
+  version "3.8.7"
+  resolved "https://registry.yarnpkg.com/@types/immutable/-/immutable-3.8.7.tgz#536d33d30f3f3d9a6d4642a219419fd82af633fb"
+  integrity sha512-nsHFDX48Tl3RaP4BF47HHe5njx40Pcp+0a8CIqzJata80Fp7JzkcuGB7UhZBGjH9aA1fMEahIqvPQQNmro5YLg==
+  dependencies:
+    immutable "*"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"
@@ -6762,6 +6769,16 @@ immer@^9.0.7:
   version "9.0.15"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.15.tgz#0b9169e5b1d22137aba7d43f8a81a495dd1b62dc"
   integrity sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==
+
+immutable-js@^0.3.1-6:
+  version "0.3.1-6"
+  resolved "https://registry.yarnpkg.com/immutable-js/-/immutable-js-0.3.1-6.tgz#42ac4805899a9afea86bd3cfdfe2478aec24d100"
+  integrity sha512-d8Qo/NICIEOrI1CbYcHZU2f1oVsgybltNpZ1k4PHagJXI3q43B9B74Jq5nsbUVkewST/ylVGT7/rodeOWry+vQ==
+
+immutable@*:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.1.0.tgz#f795787f0db780183307b9eb2091fcac1f6fafef"
+  integrity sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==
 
 immutable@~3.7.4, immutable@~3.7.6:
   version "3.7.6"
