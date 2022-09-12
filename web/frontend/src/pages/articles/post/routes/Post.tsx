@@ -268,8 +268,9 @@ const TextEditor = () => {
     toggleButtons(blockType)
   };
   const toggleButtons = (type: ButtonTypeString) => {
-    // todo: このstateはdraft.js側のstateと合わせる必要がある。
-    buttonToggleState[type] = !buttonToggleState[type]
+    const inlineStyle = editorState.getCurrentInlineStyle()
+    // このstateはdraft.js側のstateと合わせる必要がある。
+    buttonToggleState[type] = !inlineStyle.has(type)
     setButtonToggle(buttonToggleState)
   }
   const getButtonColor = (type: ButtonTypeString) => {
