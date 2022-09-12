@@ -50,18 +50,7 @@ import {
  } from "../../../../globalState"
 import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
-
-const InlineButtons = [
-  {type: "BOLD", text: "bold", icon: MdFormatBold},
-  {type: "ITALIC", text: "italic", icon: MdFormatItalic},
-  {type: "STRIKETHROUGH", text: "strikthrough", icon: MdFormatStrikethrough},
-]
-
-const BlockStyleButtons = [
-  {type: "header-one", text: "H1"},
-  {type: "header-two", text: "H2"},
-  {type: "unstyled", text: "Normal"},
-]
+import { IconType } from 'react-icons';
 
 const PostBody = () => {
   return (
@@ -194,7 +183,7 @@ const ShipItButton = () => {
         _hover={{
           bg: 'green.300',
         }}>
-        キャンセル
+        下書き保存
       </Button>
      <Button
         display={{ base: 'none', md: 'inline-flex' }}
@@ -217,6 +206,41 @@ const ShipItButton = () => {
 const TextEditor = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
   const [currentArticleContent, setCurrentArticleContent] = useRecoilState(currentArticleContentState)
+
+  const BUTTON_TYPE_STRING_LIST = [
+    'header-one',
+    'header-two',
+    'BOLD',
+    'ITALIC',
+    'STRIKETHROUGH',
+    'ordered-list-item',
+    'unordered-list-item'
+  ] as const
+  type ButtonTypeString = typeof BUTTON_TYPE_STRING_LIST[number]
+  const [buttonToggleState, setButtonToggle] = useState({
+    'header-one': false,
+    'header-two': false,
+    BOLD: false,
+    ITALIC: false,
+    STRIKETHROUGH: false,
+    'ordered-list-item': false,
+    'unordered-list-item': false,
+  } as {[buttonType in ButtonTypeString]: boolean})
+  type DraftButtons = {
+    type: ButtonTypeString,
+    text: string,
+    icon?: IconType,
+  }
+  const InlineButtons: DraftButtons[] = [
+    {type: "BOLD", text: "bold", icon: MdFormatBold},
+    {type: "ITALIC", text: "italic", icon: MdFormatItalic},
+    {type: "STRIKETHROUGH", text: "strikthrough", icon: MdFormatStrikethrough},
+  ]
+  const BlockStyleButtons: DraftButtons[] = [
+    {type: "header-one", text: "H1"},
+    {type: "header-two", text: "H2"},
+  ]
+
   const handleOnChange = (e: React.SetStateAction<EditorState>) => {
     setEditorState(e)
     const contentHtml = stateToHTML(editorState.getCurrentContent())
@@ -232,19 +256,47 @@ const TextEditor = () => {
     return "not-handled";
   };
 
-  const handleToggleClick = (e: React.MouseEvent, inlineStyle: string) => {
+  const handleToggleClick = (e: React.MouseEvent, inlineStyle: ButtonTypeString) => {
     e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+    toggleButtons(inlineStyle)
   };
 
-  const handleBlockClick = (e: React.MouseEvent, blockType: string) => {
+  const handleBlockClick = (e: React.MouseEvent, blockType: ButtonTypeString) => {
     e.preventDefault();
     setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+    toggleButtons(blockType)
   };
+  const toggleButtons = (type: ButtonTypeString) => {
+    // todo: このstateはdraft.js側のstateと合わせる必要がある。
+    buttonToggleState[type] = !buttonToggleState[type]
+    setButtonToggle(buttonToggleState)
+  }
+  const getButtonColor = (type: ButtonTypeString) => {
+    return buttonToggleState[type] ? 'blue' : ''
+  }
 
   return (
     <>
       <Flex>
+        {BlockStyleButtons.map((button, idx) => {
+          return <Button
+            onMouseDown={(e) => handleBlockClick(e, button.type)}
+            key={idx}>
+            <Box color={getButtonColor(button.type)}>{button.text}</Box>
+          </Button>
+        })}
+        {InlineButtons.map((button, idx) => {
+          return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}>
+            <Icon as={button.icon} w={5} h={5} color={getButtonColor(button.type)} />
+          </Button>
+        })}
+        <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
+          <Icon as={MdFormatListBulleted} w={5} h={5} />
+        </Button>
+        <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>
+          <Icon as={MdFormatListNumbered}  w={5} h={5} />
+        </Button>
         <Button
           disabled={editorState.getUndoStack().size <= 0}
           onMouseDown={() => setEditorState(EditorState.undo(editorState))}>
@@ -255,18 +307,7 @@ const TextEditor = () => {
           onMouseDown={() => setEditorState(EditorState.redo(editorState))}>
           <Icon as={BiRedo} w={5} h={5} />
         </Button>
-        {BlockStyleButtons.map((button, idx) => {
-          return <Button onMouseDown={(e) => handleBlockClick(e, button.type)} key={idx}>{button.text}</Button>
-        })}
-        {InlineButtons.map((button, idx) => {
-          return <Button onMouseDown={(e) => handleToggleClick(e, button.type)} key={idx}><Icon as={button.icon} w={5} h={5} /></Button>
-        })}
-        <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
-          <Icon as={MdFormatListBulleted} w={5} h={5} />
-        </Button>
-        <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>
-          <Icon as={MdFormatListNumbered}  w={5} h={5} />
-        </Button>
+
       </Flex>
         <Box
           borderWidth='2px'
