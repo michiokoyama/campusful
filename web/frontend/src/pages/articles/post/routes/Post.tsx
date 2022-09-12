@@ -286,8 +286,9 @@ const TextEditor = () => {
     setButtonToggle(buttonToggleState)
   }
   const getBlockButtonColor = (type: ButtonTypeString) => {
-    // todo: 現在のblockに対して実行する
-    return buttonToggleState[type] ? 'blue' : ''
+    const selection = editorState.getSelection()
+    const blockStyle = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType()
+    return type === blockStyle ? 'blue' : ''
   }
 
   return (
@@ -306,10 +307,10 @@ const TextEditor = () => {
           </Button>
         })}
         <Button onMouseDown={(e) => handleBlockClick(e, "ordered-list-item")}>
-          <Icon as={MdFormatListBulleted} w={5} h={5} />
+          <Icon as={MdFormatListNumbered} w={5} h={5} />
         </Button>
         <Button onMouseDown={(e) => handleBlockClick(e, "unordered-list-item")}>
-          <Icon as={MdFormatListNumbered}  w={5} h={5} />
+          <Icon as={MdFormatListBulleted}  w={5} h={5} />
         </Button>
         <Button
           disabled={editorState.getUndoStack().size <= 0}
