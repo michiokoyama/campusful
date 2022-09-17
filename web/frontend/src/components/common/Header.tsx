@@ -30,19 +30,15 @@ import {
   FiTrendingUp,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
-import { SidebarContent } from './SideBar'
+import { SearchBox } from './SearchBox';
 
 export const Header = ({children}: {children: ReactNode}) => {
-  return <HeaderBase children={children} withSidebar={false} />
-}
-
-export const HeaderWithSidebar = ({children}: {children: ReactNode}) => {
-  return <HeaderBase children={children} withSidebar={true} />
+  return <HeaderBase children={children} />
 }
 
 const leftMargin = '50px'
 
-const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: boolean}) => {
+const HeaderBase = ({children}: {children: ReactNode}) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
@@ -78,6 +74,7 @@ const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: 
             <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
+              marginLeft={{md: '60px', sm: '0px'}}
               color={useColorModeValue('gray.800', 'white')}>
               Campusful
             </Text>
@@ -86,9 +83,11 @@ const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
+          <Flex display={{ md: 'center', sm: 'none' }} w={'400px'}>
+            <SearchBox />
+          </Flex>
         </Flex>
-
-        <Stack
+       <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
@@ -121,22 +120,9 @@ const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
-      {withSidebar ?
-      <>
-        <SidebarContent
-          onClose={() => onClose}
-          display={{ base: 'none', md: 'block' }}
-        />
-       <Box ml={{ base: 0, md: 60 }} p="4">
-         {children}
-       </Box>
-      </>
-      :
       <Box ml={{ base: 0, md: 10 }} p="4">
         {children}
       </Box>
-     
-      }
     </Box>
   );
 }

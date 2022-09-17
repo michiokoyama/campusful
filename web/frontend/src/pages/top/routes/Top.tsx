@@ -7,7 +7,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { Header } from '../../../components/common/Header';
-import { SearchBox } from '../../../components/common/SearchBox';
 import { useArticleLists } from '../hooks/useArticleList'
 import {
   ChatIcon,
