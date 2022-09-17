@@ -36,7 +36,7 @@ const MainContents = () => {
           display={{ base: 'none', md: 'block' }}
         />
       </Box>
-      <Box w={{sm: '800px', md: '650px'}} bg={'white'}>
+      <Box w={{sm: '800px', md: '650px'}}>
         {data?.articles.map((prop) => (
             <ArticleLists {...prop} />
         ))}
@@ -49,8 +49,8 @@ const ArticleLists = (props: ChakraStyledOptions) => {
   const createdAt = new Date(props.createdAt)
   const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
   return (
-    <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-      <Box p='6'>
+    <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
+      <Box p='6' bg={'white'}>
         <Box display='flex' alignItems='baseline'>
           <Badge borderRadius='full' px='2' colorScheme='teal'>
             {props.category.name}
