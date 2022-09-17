@@ -5,6 +5,7 @@ import {
   ChakraStyledOptions,
   Flex,
   useDisclosure,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Header } from '../../../components/common/Header';
 import { useArticleLists } from '../hooks/useArticleList'
@@ -28,15 +29,14 @@ const MainContents = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useArticleLists()
   return (<>
-    {/* <SearchBox /> */}
-    <Flex>
+    <Flex bg={'gray.100'}>
       <Box w={{sm: '0px', md: '250px'}}>
         <SidebarContent
           onClose={() => onClose}
           display={{ base: 'none', md: 'block' }}
         />
       </Box>
-      <Box w={{sm: '800px', md: '650px'}}>
+      <Box w={{sm: '800px', md: '650px'}} bg={'white'}>
         {data?.articles.map((prop) => (
             <ArticleLists {...prop} />
         ))}

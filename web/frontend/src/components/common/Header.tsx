@@ -42,7 +42,7 @@ const HeaderBase = ({children}: {children: ReactNode}) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box>
+    <Box bg={'gray.100'}>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -75,7 +75,10 @@ const HeaderBase = ({children}: {children: ReactNode}) => {
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
               marginLeft={{md: '60px', sm: '0px'}}
-              color={useColorModeValue('gray.800', 'white')}>
+              color={useColorModeValue('#98a820', 'white')}
+              fontWeight={'bold'}
+              fontSize={'lg'}
+            >
               Campusful
             </Text>
           </Link>
