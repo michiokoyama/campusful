@@ -1,29 +1,48 @@
-import { Badge, Box, ChakraStyledOptions } from '@chakra-ui/react'
-import { HeaderWithSidebar } from '../../../components/common/Header';
+import {
+  Badge,
+  Box,
+  Center,
+  ChakraStyledOptions,
+  Flex,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { Header } from '../../../components/common/Header';
 import { SearchBox } from '../../../components/common/SearchBox';
 import { useArticleLists } from '../hooks/useArticleList'
 import {
-  ChatIcon
+  ChatIcon,
 } from '@chakra-ui/icons';
 import { HiAcademicCap } from 'react-icons/hi'
 import { createTaggedTemplate } from 'typescript';
 import sanitizeHtml from 'sanitize-html'
+import { SidebarContent } from '../../../components/common/SideBar'
 
 export const Top = () => {
   return (
-    <HeaderWithSidebar>
+    <Header>
       <MainContents />
-    </HeaderWithSidebar>
+    </Header>
     );
 }
 
 const MainContents = () => {
+  const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useArticleLists()
   return (<>
-    <SearchBox />
-    {data?.articles.map((prop) => (
-        <ArticleLists {...prop} />
-    ))}
+    {/* <SearchBox /> */}
+    <Flex>
+      <Box w={{sm: '0px', md: '250px'}}>
+        <SidebarContent
+          onClose={() => onClose}
+          display={{ base: 'none', md: 'block' }}
+        />
+      </Box>
+      <Box w={{sm: '800px', md: '650px'}}>
+        {data?.articles.map((prop) => (
+            <ArticleLists {...prop} />
+        ))}
+      </Box>
+    </Flex>
   </>)
 }
 

@@ -40,6 +40,8 @@ export const HeaderWithSidebar = ({children}: {children: ReactNode}) => {
   return <HeaderBase children={children} withSidebar={true} />
 }
 
+const leftMargin = '50px'
+
 const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: boolean}) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
@@ -54,7 +56,10 @@ const HeaderBase = ({children, withSidebar}: {children: ReactNode, withSidebar: 
         borderBottom={1}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}>
+        align={'center'}
+        ml={'auto'}
+        mr={'auto'}
+        >
         <Flex
           flex={{ base: 1, md: 'auto' }}
           ml={{ base: -2 }}
