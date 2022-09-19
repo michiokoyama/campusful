@@ -77,7 +77,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 44 }}
+      w={{ base: 'full', md: 48 }}
       pos="fixed"
       h="full"
       {...rest}>
