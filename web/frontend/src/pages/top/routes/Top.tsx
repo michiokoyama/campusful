@@ -51,26 +51,10 @@ const ArticleLists = (props: ChakraStyledOptions) => {
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
       <Box p='6' bg={'white'}>
-        <Box display='flex' alignItems='baseline'>
-          <Badge borderRadius='full' px='2' colorScheme='teal'>
-            {props.category.name}
-          </Badge>
-          <Box
-            color='gray.500'
-            fontWeight='semibold'
-            letterSpacing='wide'
-            fontSize='xs'
-            textTransform='uppercase'
-            ml='2'
-          >
-            {props.author.university.name} 
-          </Box>
-        </Box>
-
-        <Box
+       <Box
           mt='1'
-          fontWeight='semibold'
-          as='h4'
+          fontWeight='bold'
+          fontSize={'xl'}
           lineHeight='tight'
           noOfLines={1}
         >
@@ -81,23 +65,37 @@ const ArticleLists = (props: ChakraStyledOptions) => {
 
         <Box mt='2' mb='5'>
           <Box display='flex' float={'left'}>
-            <Box as='span' color='gray.600' fontSize='sm'>
-            投稿日: {displayCreatedAt}
+            <Badge variant='outline' px='2' colorScheme='teal'>
+              {props.category.name}
+            </Badge>
+            <Box as='span' color='gray.600' fontSize='xs' pl={'7px'}>
+              投稿日: {displayCreatedAt}
+            </Box>
+           <Box
+              color='gray.500'
+              fontWeight='semibold'
+              letterSpacing='wide'
+              fontSize='xs'
+              textTransform='uppercase'
+              pl={'7px'}
+            >
+              {props.author.university.name} 
             </Box>
           </Box>
+
           <Box display='flex' float={'right'}>
-            <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-              <ChatIcon />
-              <Box as='span' paddingLeft='1' paddingRight={3}>
-                {props.commentNum}
-              </Box>
-            </Box>
             <Box as='span' ml='2' color='gray.600' fontSize='sm'>
               <Box as='span' float={'left'} paddingTop={0.5}>
                 <HiAcademicCap size={'20px'}/>
               </Box>
               <Box as='span' paddingLeft='1' paddingRight={3}>
                 {props.thanksNum}
+              </Box>
+            </Box>
+            <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+              <ChatIcon />
+              <Box as='span' paddingLeft='1' paddingRight={3}>
+                {props.commentNum}
               </Box>
             </Box>
           </Box>
