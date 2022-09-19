@@ -6,6 +6,7 @@ import {
   Flex,
   useDisclosure,
   useColorModeValue,
+  color,
 } from '@chakra-ui/react'
 import { Header } from '../../../components/common/Header';
 import { useArticleLists } from '../hooks/useArticleList'
@@ -16,6 +17,7 @@ import { HiAcademicCap } from 'react-icons/hi'
 import { createTaggedTemplate } from 'typescript';
 import sanitizeHtml from 'sanitize-html'
 import { SidebarContent } from '../../../components/common/SideBar'
+import { colors } from '../../../const'
 
 export const Top = () => {
   return (
@@ -50,8 +52,8 @@ const ArticleLists = (props: ChakraStyledOptions) => {
   const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
-      <Box p='6' bg={'white'}>
-       <Box
+      <Box pt='3' pb='6' pl='6' pr='6' bg={'white'}>
+        <Box
           mt='1'
           fontWeight='bold'
           fontSize={'xl'}
@@ -65,8 +67,11 @@ const ArticleLists = (props: ChakraStyledOptions) => {
 
         <Box mt='2' mb='5'>
           <Box display='flex' float={'left'}>
-            <Badge variant='outline' px='2' colorScheme='teal'>
+            <Badge variant='solid' px='2' bg={colors.theme} fontSize='xs'>
               {props.category.name}
+            </Badge>
+            <Badge variant='outline' px='2' borderColor={'gray'}>
+              {props.type}
             </Badge>
             <Box as='span' color='gray.600' fontSize='xs' pl={'7px'}>
               投稿日: {displayCreatedAt}
