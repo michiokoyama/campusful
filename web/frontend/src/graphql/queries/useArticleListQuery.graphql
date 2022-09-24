@@ -10,6 +10,7 @@ query getArticles ($categoryIds: [Float!]!) {
     createdAt
 		author {
       id
+      displayName
       gender
       email
       university {

@@ -1,6 +1,7 @@
 query users {
   user {
     id
+    displayName
     gender
     email
     articles {

@@ -11,6 +11,7 @@ const initData = async (
     {
       firstName: '太郎',
       lastName: 'キャンパス',
+      displayName: 'ピカチュウ',
       gender: GenderType.Man,
       email: 'test1@gmail.com',
       universityId: universityIdMap('東京大学'),
@@ -18,8 +19,9 @@ const initData = async (
     {
       firstName: '花子',
       lastName: 'テスト',
-      email: 'test2@gmail.com',
+      displayName: 'イーブイ',
       gender: GenderType.Woman,
+      email: 'test2@gmail.com',
       universityId: universityIdMap('慶應義塾大学'),
     },
   ]

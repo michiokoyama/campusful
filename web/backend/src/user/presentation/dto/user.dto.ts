@@ -12,12 +12,14 @@ export class UserDto {
     email: string,
     firstName: string,
     lastName: string,
+    displayName: string,
     gender: GenderType,
   ) {
     this.id = id
     this.email = email
     this.firstName = firstName
     this.lastName = lastName
+    this.displayName = displayName
     this.gender = gender
   }
   static fromEntity(entity: {
@@ -25,6 +27,7 @@ export class UserDto {
     email: string
     firstName: string
     lastName: string
+    displayName: string
     gender: GenderType
   }) {
     return new UserDto(
@@ -32,6 +35,7 @@ export class UserDto {
       entity.email,
       entity.firstName,
       entity.lastName,
+      entity.displayName,
       entity.gender,
     )
   }
@@ -55,6 +59,11 @@ export class UserDto {
     nullable: false,
   })
   lastName!: string
+
+  @Field(() => String, {
+    nullable: false,
+  })
+  displayName!: string
 
   @Field(() => String, {
     nullable: false,

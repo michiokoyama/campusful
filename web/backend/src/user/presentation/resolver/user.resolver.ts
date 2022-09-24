@@ -18,11 +18,12 @@ export class UserResolver {
   async createuser(
     @Args('firstName') firstName: string,
     @Args('lastName') lastName: string,
+    @Args('displayName') displayName: string,
     @Args('gender') gender: GenderType,
     @Args('email') email: string,
   ) {
     return this.prisma.user.create({
-      data: { firstName, lastName, gender, email },
+      data: { firstName, lastName, displayName, gender, email },
     })
   }
 }

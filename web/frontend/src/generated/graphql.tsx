@@ -58,6 +58,7 @@ export type MutationCreatearticleArgs = {
 
 
 export type MutationCreateuserArgs = {
+  displayName: Scalars['String'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   gender: Scalars['String'];
@@ -84,6 +85,7 @@ export type University = {
 export type User = {
   __typename?: 'User';
   articles: Array<Article>;
+  displayName: Scalars['String'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   gender: Scalars['String'];
@@ -108,12 +110,12 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, gender: string, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
+export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, displayName: string, gender: string, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
 
 
 export const CreateArticleDocument = gql`
@@ -180,6 +182,7 @@ export const GetArticlesDocument = gql`
     createdAt
     author {
       id
+      displayName
       gender
       email
       university {
@@ -224,6 +227,7 @@ export const UsersDocument = gql`
     query users {
   user {
     id
+    displayName
     gender
     email
     articles {
