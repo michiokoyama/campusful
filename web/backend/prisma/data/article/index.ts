@@ -1,4 +1,4 @@
-import { Article, Category, User, PrismaClient } from '@prisma/client'
+import { Article, Category, User, PrismaClient, ArticleType } from '@prisma/client'
 
 const initData = async (
   conn: PrismaClient,
@@ -18,6 +18,7 @@ const initData = async (
       content: 'テスト本文',
       categoryId: categoryIdMap('学問・進学'),
       authorId: userIdMap('キャンパス太郎'),
+      type: ArticleType.Article,
     },
     {
       title:
@@ -26,6 +27,7 @@ const initData = async (
         '幼少期から計15年間サッカーに打ち込み、幼稚園、小学生、中学生、高校生とどのチームでもキャプテンを経験しました。それ以外にも児童会長や学級委員長になるなど、幼少期は組織のリーダーになることが多かったです。学業面においても、塾に通っていたことなどもあり成績は良く、お陰様で、第一志望だった千葉県立千葉高校に入学しました。',
       categoryId: categoryIdMap('留学'),
       authorId: userIdMap('テストユーザー'),
+      type: ArticleType.Article,
     },
   ]
   await conn.article.createMany({
