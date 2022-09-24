@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { GenderType } from '@prisma/client'
 import { ArticleDto } from '../../../article/presentation/dto/article.dto'
 import { UniversityDto } from '../../../university/presentation/dto/university.dto'
 
@@ -6,13 +7,33 @@ import { UniversityDto } from '../../../university/presentation/dto/university.d
   isAbstract: true,
 })
 export class UserDto {
-  private constructor(id: number, email: string, name: string) {
+  private constructor(
+    id: number,
+    email: string,
+    firstName: string,
+    lastName: string,
+    gender: GenderType,
+  ) {
     this.id = id
     this.email = email
-    this.name = name
+    this.firstName = firstName
+    this.lastName = lastName
+    this.gender = gender
   }
-  static fromEntity(entity: { id: number; email: string; name: string }) {
-    return new UserDto(entity.id, entity.email, entity.name)
+  static fromEntity(entity: {
+    id: number
+    email: string
+    firstName: string
+    lastName: string
+    gender: GenderType
+  }) {
+    return new UserDto(
+      entity.id,
+      entity.email,
+      entity.firstName,
+      entity.lastName,
+      entity.gender,
+    )
   }
 
   @Field(() => ID, {
@@ -28,7 +49,17 @@ export class UserDto {
   @Field(() => String, {
     nullable: false,
   })
-  name!: string
+  firstName!: string
+
+  @Field(() => String, {
+    nullable: false,
+  })
+  lastName!: string
+
+  @Field(() => String, {
+    nullable: false,
+  })
+  gender!: GenderType
 
   @Field(() => [ArticleDto], {
     nullable: false,

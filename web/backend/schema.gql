@@ -28,7 +28,9 @@ enum ArticleType {
 type User {
   id: ID!
   email: String!
-  name: String!
+  firstName: String!
+  lastName: String!
+  gender: String!
   articles: [Article!]!
   university: University!
 }
@@ -50,5 +52,5 @@ scalar DateTime
 
 type Mutation {
   createarticle(title: String!, content: String!, type: String!, categoryId: Float!, authorId: Float!): Article!
-  createuser(name: String!, email: String!): User!
+  createuser(firstName: String!, lastName: String!, gender: String!, email: String!): User!
 }

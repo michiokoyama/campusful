@@ -1,4 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { GenderType } from '@prisma/client'
 import { PrismaService } from 'src/prisma.service'
 import { UserDto } from '../dto/user.dto'
 
@@ -14,7 +15,14 @@ export class UserResolver {
   }
 
   @Mutation(() => UserDto)
-  async createuser(@Args('name') name: string, @Args('email') email: string) {
-    return this.prisma.user.create({ data: { name, email } })
+  async createuser(
+    @Args('firstName') firstName: string,
+    @Args('lastName') lastName: string,
+    @Args('gender') gender: GenderType,
+    @Args('email') email: string,
+  ) {
+    return this.prisma.user.create({
+      data: { firstName, lastName, gender, email },
+    })
   }
 }

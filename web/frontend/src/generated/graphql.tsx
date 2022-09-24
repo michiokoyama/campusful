@@ -59,7 +59,9 @@ export type MutationCreatearticleArgs = {
 
 export type MutationCreateuserArgs = {
   email: Scalars['String'];
-  name: Scalars['String'];
+  firstName: Scalars['String'];
+  gender: Scalars['String'];
+  lastName: Scalars['String'];
 };
 
 export type Query = {
@@ -83,8 +85,10 @@ export type User = {
   __typename?: 'User';
   articles: Array<Article>;
   email: Scalars['String'];
+  firstName: Scalars['String'];
+  gender: Scalars['String'];
   id: Scalars['ID'];
-  name: Scalars['String'];
+  lastName: Scalars['String'];
   university: University;
 };
 
@@ -104,12 +108,12 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, name: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, name: string, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
+export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, gender: string, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
 
 
 export const CreateArticleDocument = gql`
@@ -176,7 +180,7 @@ export const GetArticlesDocument = gql`
     createdAt
     author {
       id
-      name
+      gender
       email
       university {
         name
@@ -220,7 +224,7 @@ export const UsersDocument = gql`
     query users {
   user {
     id
-    name
+    gender
     email
     articles {
       id

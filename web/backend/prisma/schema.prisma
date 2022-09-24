@@ -34,7 +34,9 @@ model University {
 model User {
   id           Int       @id @default(autoincrement())
   email        String    @unique
-  name         String?
+  firstName         String?
+  lastName         String?
+  gender       GenderType?
   universityId Int?
   articles     Article[]
   updatedAt    DateTime  @updatedAt
@@ -73,4 +75,10 @@ model Article {
 enum ArticleType {
   Article  /// 記事
   Question /// 質問
+}
+
+enum GenderType {
+  Man
+  Woman
+  Other
 }

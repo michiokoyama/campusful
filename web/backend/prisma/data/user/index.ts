@@ -1,4 +1,4 @@
-import { User, PrismaClient, University } from '@prisma/client'
+import { User, PrismaClient, University, GenderType } from '@prisma/client'
 
 const initData = async (
   conn: PrismaClient,
@@ -9,14 +9,17 @@ const initData = async (
   }
   const data = [
     {
-      // todo: 性別を取得、苗字と名前で分ける
-      name: 'キャンパス太郎',
+      firstName: '太郎',
+      lastName: 'キャンパス',
+      gender: GenderType.Man,
       email: 'test1@gmail.com',
       universityId: universityIdMap('東京大学'),
     },
     {
-      name: 'テストユーザー',
+      firstName: '花子',
+      lastName: 'テスト',
       email: 'test2@gmail.com',
+      gender: GenderType.Woman,
       universityId: universityIdMap('慶應義塾大学'),
     },
   ]
