@@ -9,9 +9,9 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
   { id: 1, name: '学問・進学', checked: false },
-  { id: 2, name: '留学', checked: false},
-  { id: 3, name: '就活', checked: false},
-  { id: 4, name: 'インターン', checked: false },
+  { id: 2, name: '就活', checked: false},
+  { id: 3, name: '留学', checked: false},
+  { id: 4, name: 'インターン・アルバイト', checked: false },
   { id: 5, name: '部活・サークル', checked: false },
   { id: 6, name: '趣味', checked: false},
   { id: 7, name: '時事問題', checked: false },

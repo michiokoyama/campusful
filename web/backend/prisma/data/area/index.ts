@@ -3,9 +3,7 @@ import { Area, PrismaClient } from '@prisma/client'
 const initData = async (conn: PrismaClient): Promise<Area[]> => {
   const data = [
     {
-      name: '北海道',
-    },
-    {
+      id: 1,
       name: '東京',
     },
   ]
