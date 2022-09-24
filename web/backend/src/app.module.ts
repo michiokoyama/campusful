@@ -17,8 +17,8 @@ import { UserModule } from './user/user.module'
       playground: true,
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       cors: {
-        origin: 'http://localhost:3001',
-        credentials: true,
+        origin: '*',
+        credentials: false,
       },
       formatError: (error: GraphQLError) => {
         // GraphQLのレスポンスはstacktraceを含んでしまうのでここで除去する
