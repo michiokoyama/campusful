@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import {
   Badge,
   Box,
+  Button,
   Center,
   ChakraStyledOptions,
   Flex,
@@ -48,8 +50,13 @@ const MainContents = () => {
 }
 
 const ArticleLists = (props: ChakraStyledOptions) => {
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  const noOfLinesOfContent = isOpen ? undefined : 3
   const createdAt = new Date(props.createdAt)
   const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
+  const toggleOpen = () => {
+
+  }
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
       <Box pt='3' pb='6' pl='6' pr='6' bg={'white'}>
@@ -58,12 +65,17 @@ const ArticleLists = (props: ChakraStyledOptions) => {
           fontWeight='bold'
           fontSize={'xl'}
           lineHeight='tight'
-          noOfLines={1}
+          noOfLines={2}
         >
           {props.title}
         </Box>
 
-        <Box noOfLines={3} dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content)}}></Box>
+        <Box
+          noOfLines={noOfLinesOfContent}
+          onClick={onToggle}
+          dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content)}}
+        >
+          </Box>
 
         <Box mt='2' mb='5'>
           <Box display='flex' float={'left'}>
