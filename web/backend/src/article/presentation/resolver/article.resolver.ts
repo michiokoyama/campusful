@@ -15,6 +15,7 @@ export class ArticlesResolver {
     return this.prisma.article.findMany({
       include: { author: { include: { university: true } }, category: true },
       where: condition,
+      orderBy: [{ createdAt: 'desc'}, {id: 'desc' }],
     })
   }
 
