@@ -40,6 +40,8 @@ model User {
   gender       GenderType?
   universityId Int?
   articles     Article[]
+  comments     Comment[]
+  thanks       Thanks[]
   updatedAt    DateTime    @updatedAt
   createdAt    DateTime    @default(now())
 
@@ -66,11 +68,36 @@ model Article {
   thanksNum  Int?         @default(0)
   authorId   Int?
   categoryId Int?
+  commentId  Comment[]
+  thanksId   Thanks[]
   updatedAt  DateTime     @updatedAt
   createdAt  DateTime     @default(now())
 
   author   User?     @relation(fields: [authorId], references: [id])
   category Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  authorId  Int
+  articleId Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  author  User?    @relation(fields: [authorId], references: [id])
+  article Article? @relation(fields: [articleId], references: [id])
+}
+
+model Thanks {
+  id        Int      @id @default(autoincrement())
+  authorId  Int
+  articleId Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  author  User?    @relation(fields: [authorId], references: [id])
+  article Article? @relation(fields: [articleId], references: [id])
 }
 
 enum ArticleType {
