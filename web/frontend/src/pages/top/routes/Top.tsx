@@ -141,17 +141,22 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
       <Box pt='3' pb='6' pl='6' pr='6' bg={'white'}>
         <Title title={props.title} />
         <Content content={props.content} />
-      <Box mt='2' mb='5'>
-         <Category
+        <Box mt='2' mb='5'>
+          <Category
             category={props.category}
             type={props.type}
             universityName={props.author.university.name}
           />
           <Comment thanksNum={props.thanksNum} commentNum={props.commentNum} />
-        </Box> {/* カテゴリ、投稿日 */}
-        <Box>
-          <Input placeholder='コメントを追加する' />
-        </Box>
+        </Box> {/* カテゴリ、投稿日、thanks、コメント */}
+        {isOpen
+          ?
+            <Box pt={'20px'}>
+              <Input placeholder='コメントする' />
+            </Box>
+          :
+            <></>
+        }
       </Box> {/* 記事全体 padding */}
     </Box>
   )
