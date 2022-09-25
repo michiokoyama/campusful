@@ -67,9 +67,12 @@ const ArticleLists = (props: ChakraStyledOptions) => {
 
         <Box mt='2' mb='5'>
           <Box display='flex' float={'left'}>
+            {props.category?.name ?
             <Badge variant='solid' px='2' bg={colors.theme} fontSize='xs'>
               {props.category.name}
             </Badge>
+              : <></>
+            }
             <Badge variant='outline' px='2' borderColor={'gray'}>
               {props.type}
             </Badge>

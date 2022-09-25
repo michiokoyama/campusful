@@ -16,7 +16,7 @@ type Article {
   thanksNum: Int!
   commentNum: Int!
   author: User!
-  category: Category!
+  category: Category
   createdAt: DateTime!
 }
 

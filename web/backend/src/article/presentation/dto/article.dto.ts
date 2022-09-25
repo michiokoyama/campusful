@@ -91,7 +91,7 @@ export class ArticleDto {
   author!: UserDto
 
   @Field(() => CategoryDto, {
-    nullable: false,
+    nullable: true,
   })
   category!: CategoryDto
 
