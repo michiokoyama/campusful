@@ -61,19 +61,22 @@ const ArticleLists = (props: ChakraStyledOptions) => {
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
       <Box pt='3' pb='6' pl='6' pr='6' bg={'white'}>
         <Box
-          mt='1'
           fontWeight='bold'
           fontSize={'xl'}
           lineHeight='tight'
+          mt='1'
           noOfLines={2}
+          onClick={onToggle}
+          _hover={{cursor: 'pointer'}}
         >
           {props.title}
         </Box>
 
         <Box
+          dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content)}}
           noOfLines={noOfLinesOfContent}
           onClick={onToggle}
-          dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content)}}
+          _hover={{cursor: 'pointer'}}
         >
           </Box>
 
