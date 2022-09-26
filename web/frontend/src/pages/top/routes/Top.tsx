@@ -34,7 +34,16 @@ export const Top = () => {
 }
 
 const getDisplayDate = (d: Date) => {
-  return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + (d.getDate())
+  const zeroPadding = (num: number) => {
+    if (0 <= num && num < 10){
+      return `0${num}`
+    }
+    return num
+  }
+  const minutes = zeroPadding(d.getMinutes())
+  const seconds = zeroPadding(d.getSeconds())
+  return `${d.getFullYear()}/${(d.getMonth() + 1)}/${(d.getDate())} 
+        ${d.getHours()}:${minutes}:${seconds}`
 }
 
 const MainContents = () => {
