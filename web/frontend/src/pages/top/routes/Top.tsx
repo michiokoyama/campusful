@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import {
   Badge,
   Box,
@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { Header } from '../../../components/common/Header';
 import { useArticleLists } from '../hooks/useArticleList'
+import { useCreateComment } from '../hooks/useCreateComment'
 import {
   ChatIcon,
 } from '@chakra-ui/icons';
@@ -138,18 +139,48 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     )
   }
 
-  const AddComment = (props: {articleType: ArticleType}) => {
-    if (props.articleType === ArticleType.Article){
+  const AddComment = (props: {
+    articleType: ArticleType
+    articleId: number
+    authorId: number
+  }) => {
+    const { articleType, articleId, authorId } = props
+    const [currentComment, setCurrentComment] = useState('')
+    const handleComment = (e: ChangeEvent<HTMLInputElement>) => {
+      const text = e.target.value 
+      setCurrentComment(text)
+    }
+    const { createCommentMutation, data, loading, error } = useCreateComment({variables: {
+      content: currentComment,
+      articleId,
+      authorId,
+    }})
+    const handleShipIt = () => createCommentMutation()
+    const ShipItButton = () => {
+      return (
+        <Button size='sm' mt={'10px'} bg={colors.theme} color='white' onClick={handleShipIt}>投稿</Button>
+      )
+    }
+
+    if (articleType === ArticleType.Article){
       return (
         <Box pt={'20px'}>
-          <Input placeholder='コメントする' />
+          <Input
+            placeholder='コメントする'
+            onChange={(e) => handleComment(e)}
+          />
+          <ShipItButton />
         </Box>
       )
     }
-    if (props.articleType === ArticleType.Question){
+    if (articleType === ArticleType.Question){
       return (
         <Box pt={'20px'}>
-          <Input placeholder='質問に回答する' />
+          <Input
+            placeholder='質問に回答する'
+            onChange={(e) => handleComment(e)}
+          />
+          <ShipItButton />
         </Box>
       )
     }
@@ -184,7 +215,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
         {isOpen
           ?
           <Box>
-            <AddComment articleType={props.type} />
+            <AddComment articleType={props.type} articleId={Number(props.id)} authorId={Number(props.author.id)} />
             <ShowComment comments={comments} />
           </Box>
          :
