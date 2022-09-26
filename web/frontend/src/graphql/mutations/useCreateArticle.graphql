@@ -15,11 +15,5 @@ mutation CreateArticle(
     title
     content
     type
-    category {
-      id
-    }
-    author {
-      id
-    }
   }
 }
