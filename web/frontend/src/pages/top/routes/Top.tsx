@@ -102,7 +102,12 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     )
   }
 
-  const Category = (props: {category: {name?: string}, type: ArticleType, universityName: string }) => {
+  const Category = (props: {
+    category: {name?: string},
+    displayName: string
+    type: ArticleType,
+    universityName: string,
+  }) => {
     return (
       <Box display='flex' float={'left'}>
         {props.category?.name ?
@@ -117,9 +122,19 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
         <Box as='span' color='gray.600' fontSize='xs' pl={'7px'}>
           投稿日: {displayCreatedAt}
         </Box>
-       <Box
-          color='gray.500'
-          fontWeight='semibold'
+        <Box
+          color='black.500'
+          fontWeight='medium'
+          letterSpacing='wide'
+          fontSize='xs'
+          textTransform='uppercase'
+          pl={'7px'}
+        >
+          {props.displayName} 
+        </Box>
+        <Box
+          color='black.500'
+          fontWeight='medium'
           letterSpacing='wide'
           fontSize='xs'
           textTransform='uppercase'
@@ -232,6 +247,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
         <Box mt='2' mb='5'>
           <Category
             category={{name: props.category?.name}}
+            displayName={props.author.displayName}
             type={props.type}
             universityName={props.author.university.name}
           />
