@@ -32,6 +32,10 @@ export const Top = () => {
     );
 }
 
+const getDisplayDate = (d: Date) => {
+  return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + (d.getDate())
+}
+
 const MainContents = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useArticleLists()
@@ -56,8 +60,16 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const noOfLinesOfContent = isOpen ? undefined : 3
   const createdAt = new Date(props.createdAt)
-  const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
-  const comments = props.comments ? props.comments.map(comment => comment.content) : []
+  const displayCreatedAt = getDisplayDate(createdAt)
+  const comments = props.comments
+    ? props.comments.map((comment) => {
+        return {
+          content: comment.content,
+          displayName: comment.author.displayName,
+          universityName: comment.author.university.name,
+          createdAt: new Date(comment.createdAt)
+        }})
+    : []
   const commentCount = comments.length
 
   // タイトル
@@ -187,12 +199,24 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     return (<></>)
   }
 
-  const ShowComment = (props: {comments: string[]}) => {
+  const ShowComment = (props: {
+    comments: {
+      content: string
+      createdAt: Date
+      displayName: string
+      universityName: string
+    }[]
+  }) => {
     return (<>
       {
-        props.comments.map((comment) => (
+        comments.map((comment) => (
           <Box pt={'20px'} border={'medium'}>
-            {comment}
+            <Box>
+              {comment.content}
+            </Box>
+            <Box as='span' color='gray.600' fontSize='xs'>
+              {comment.displayName} {comment.universityName} {getDisplayDate(comment.createdAt)}
+            </Box>
           </Box>
         ))
       }
@@ -216,7 +240,9 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
           ?
           <Box>
             <AddComment articleType={props.type} articleId={Number(props.id)} authorId={Number(props.author.id)} />
-            <ShowComment comments={comments} />
+            <ShowComment
+              comments={comments}
+            />
           </Box>
          :
             <></>
