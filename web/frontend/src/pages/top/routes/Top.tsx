@@ -28,9 +28,10 @@ import { ArticleType, GetArticlesQuery } from 'generated/graphql';
 
 export const Top = () => {
   return (
-    <Header>
-      <MainContents />
-    </Header>
+    <>
+    <Header />
+    <MainContents />
+    </>
     );
 }
 
@@ -51,7 +52,7 @@ const MainContents = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useArticleLists()
   return (<>
-    <Flex bg={'gray.100'}>
+    <Flex bg={'gray.100'} px={{lg: '100px'}}>
       <Box w={{sm: '0px', md: '250px'}}>
         <SidebarContent
           onClose={() => onClose}

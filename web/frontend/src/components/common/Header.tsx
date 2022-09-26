@@ -31,17 +31,17 @@ import {
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 
-export const Header = ({children}: {children: ReactNode}) => {
-  return <HeaderBase children={children} />
+export const Header = () => {
+  return <HeaderBase />
 }
 
 const leftMargin = '50px'
 
-const HeaderBase = ({children}: {children: ReactNode}) => {
+const HeaderBase = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box bg={'gray.100'}>
+    <Box bg={'white'} px={{lg: '50px'}}>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -49,8 +49,6 @@ const HeaderBase = ({children}: {children: ReactNode}) => {
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
         ml={'auto'}
         mr={'auto'}
@@ -119,10 +117,7 @@ const HeaderBase = ({children}: {children: ReactNode}) => {
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
-      <Box ml={{ base: 0, md: 10 }} p="4">
-        {children}
-      </Box>
-    </Box>
+   </Box>
   );
 }
 

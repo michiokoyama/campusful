@@ -352,8 +352,9 @@ const TextEditor = () => {
 
 export const Post = () => {
   return (
-    <Header>
+    <>
+      <Header />
       <PostBody />
-    </Header>
+    </>
   )
 }
