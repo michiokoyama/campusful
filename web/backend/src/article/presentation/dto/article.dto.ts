@@ -8,6 +8,7 @@ import {
 } from '@nestjs/graphql'
 import { UserDto } from '../../../user/presentation/dto/user.dto'
 import { CategoryDto } from '../../../category/presentation/dto/category.dto'
+import { CommentDto } from '../../../comment/presentation/dto/comment.dto'
 
 export const GqlArticleTypeMap = {
   Article: 'Article',
@@ -95,9 +96,13 @@ export class ArticleDto {
   })
   category!: CategoryDto
 
+  @Field(() => [CommentDto], {
+    nullable: true,
+  })
+  comments!: CommentDto[]
+
   @Field(() => GraphQLISODateTime, {
     nullable: false,
   })
   createdAt!: Date
-
 }

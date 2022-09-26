@@ -20,5 +20,8 @@ query getArticles ($categoryIds: [Float!]!) {
     category {
       name
     }
+    comments {
+      content
+    }
   }
 }
