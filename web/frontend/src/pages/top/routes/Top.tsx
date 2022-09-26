@@ -136,6 +136,24 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     )
   }
 
+  const AddComment = (props: {articleType: ArticleType}) => {
+    if (props.articleType === ArticleType.Article){
+      return (
+        <Box pt={'20px'}>
+          <Input placeholder='コメントする' />
+        </Box>
+      )
+    }
+    if (props.articleType === ArticleType.Question){
+      return (
+        <Box pt={'20px'}>
+          <Input placeholder='質問に回答する' />
+        </Box>
+      )
+    }
+    return (<></>)
+  }
+
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
       <Box pt='3' pb='6' pl='6' pr='6' bg={'white'}>
@@ -151,10 +169,8 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
         </Box> {/* カテゴリ、投稿日、thanks、コメント */}
         {isOpen
           ?
-            <Box pt={'20px'}>
-              <Input placeholder='コメントする' />
-            </Box>
-          :
+            <AddComment articleType={props.type} />
+         :
             <></>
         }
       </Box> {/* 記事全体 padding */}
