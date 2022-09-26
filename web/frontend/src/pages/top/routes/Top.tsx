@@ -56,7 +56,8 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
   const noOfLinesOfContent = isOpen ? undefined : 3
   const createdAt = new Date(props.createdAt)
   const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
-  const comments = props.comments ? props.comments.map(comment => comment.content) : null
+  const comments = props.comments ? props.comments.map(comment => comment.content) : []
+  const commentCount = comments.length
 
   // タイトル
   const Title = (props: {title: string}) => {
@@ -155,10 +156,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     return (<></>)
   }
 
-  const ShowComment = (props: {comments: string[] | null}) => {
-    if (props.comments === null){
-      return <></>
-    }
+  const ShowComment = (props: {comments: string[]}) => {
     return (<>
       {
         props.comments.map((comment) => (
@@ -181,7 +179,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
             type={props.type}
             universityName={props.author.university.name}
           />
-          <CommentNum thanksNum={props.thanksNum} commentNum={props.commentNum} />
+          <CommentNum thanksNum={props.thanksNum} commentNum={commentCount} />
         </Box> {/* カテゴリ、投稿日、thanks、コメント */}
         {isOpen
           ?
