@@ -22,6 +22,7 @@ import { HiAcademicCap } from 'react-icons/hi'
 import { createTaggedTemplate } from 'typescript';
 import sanitizeHtml from 'sanitize-html'
 import { SidebarContent } from '../../../components/common/SideBar'
+import { SearchBox } from '../../../components/common/SearchBox';
 import { colors } from '../../../const'
 import { ArticleType, GetArticlesQuery } from 'generated/graphql';
 
@@ -58,6 +59,7 @@ const MainContents = () => {
         />
       </Box>
       <Box w={{sm: '800px', md: '650px'}}>
+        <SearchBox />
         {data?.articles.map((prop) => (
             <ArticleLists {...prop} />
         ))}

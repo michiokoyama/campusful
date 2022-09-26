@@ -30,7 +30,6 @@ import {
   FiTrendingUp,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
-import { SearchBox } from './SearchBox';
 
 export const Header = ({children}: {children: ReactNode}) => {
   return <HeaderBase children={children} />
@@ -86,10 +85,7 @@ const HeaderBase = ({children}: {children: ReactNode}) => {
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
-          <Flex display={{ md: 'center', sm: 'none' }} w={'400px'}>
-            <SearchBox />
-          </Flex>
-        </Flex>
+       </Flex>
        <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
