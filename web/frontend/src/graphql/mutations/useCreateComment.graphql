@@ -1,0 +1,13 @@
+mutation CreateComment (
+  $content: String!
+  $articleId: Float!
+  $authorId: Float!
+) {
+  createcomment(
+    content: $content,
+    articleId: $categoryId,
+    authorId: $authorId,
+  ){
+    content
+ }
+}
