@@ -16,7 +16,7 @@ export class ArticlesResolver {
       include: {
         author: { include: { university: true } },
         category: true,
-        comments: true,
+        comments: { include: { author: { include: { university: true } } } },
       },
       where: condition,
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],

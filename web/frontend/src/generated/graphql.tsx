@@ -45,9 +45,10 @@ export type Category = {
 export type Comment = {
   __typename?: 'Comment';
   article: Array<Article>;
+  author: User;
   content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
-  user: User;
 };
 
 export type Mutation = {
@@ -137,7 +138,7 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null, comments?: Array<{ __typename?: 'Comment', content: string }> | null }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null, comments?: Array<{ __typename?: 'Comment', content: string, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, university: { __typename?: 'University', name: string } } }> | null }> };
 
 export type GetCommentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -255,6 +256,14 @@ export const GetArticlesDocument = gql`
     }
     comments {
       content
+      createdAt
+      author {
+        id
+        displayName
+        university {
+          name
+        }
+      }
     }
   }
 }

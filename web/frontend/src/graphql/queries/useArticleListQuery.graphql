@@ -22,6 +22,14 @@ query getArticles ($categoryIds: [Float!]!) {
     }
     comments {
       content
+      createdAt
+      author {
+        id
+        displayName
+        university {
+          name
+        }
+      }
     }
   }
 }

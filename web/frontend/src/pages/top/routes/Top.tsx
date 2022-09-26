@@ -191,7 +191,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     return (<>
       {
         props.comments.map((comment) => (
-          <Box pt={'20px'}>
+          <Box pt={'20px'} border={'medium'}>
             {comment}
           </Box>
         ))

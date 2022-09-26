@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Field, ID, ObjectType, GraphQLISODateTime } from '@nestjs/graphql'
 import { ArticleDto } from '../../../article/presentation/dto/article.dto'
 import { UserDto } from '../../../user/presentation/dto/user.dto'
 
@@ -30,7 +30,12 @@ export class CommentDto {
   article!: ArticleDto
 
   @Field(() => UserDto, {
+    nullable: true,
+  })
+  author!: UserDto
+
+  @Field(() => GraphQLISODateTime, {
     nullable: false,
   })
-  user!: UserDto
+  createdAt!: Date
 }

@@ -66,7 +66,7 @@ export class UserDto {
   displayName!: string
 
   @Field(() => String, {
-    nullable: false,
+    nullable: true,
   })
   gender!: GenderType
 
