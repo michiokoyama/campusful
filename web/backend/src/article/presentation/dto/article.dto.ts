@@ -60,7 +60,6 @@ export class ArticleDto {
   })
   type!: ArticleType
 
-
   @Field(() => String, {
     nullable: false,
   })
@@ -99,7 +98,7 @@ export class ArticleDto {
   @Field(() => [CommentDto], {
     nullable: true,
   })
-  comments!: CommentDto[]
+  comments!: [CommentDto]
 
   @Field(() => GraphQLISODateTime, {
     nullable: false,

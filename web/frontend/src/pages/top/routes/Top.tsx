@@ -56,6 +56,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
   const noOfLinesOfContent = isOpen ? undefined : 3
   const createdAt = new Date(props.createdAt)
   const displayCreatedAt = createdAt.getFullYear() + '/' + (createdAt.getMonth() + 1) + '/' + (createdAt.getDate())
+  const comments = props.comments ? props.comments.map(comment => comment.content) : null
 
   // タイトル
   const Title = (props: {title: string}) => {
@@ -115,7 +116,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     )
   }
 
-  const Comment = (props: {thanksNum: number, commentNum: number}) => {
+  const CommentNum = (props: {thanksNum: number, commentNum: number}) => {
     return (
       <Box display='flex' float={'right'}>
         <Box as='span' ml='2' color='gray.600' fontSize='sm'>
@@ -154,6 +155,21 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     return (<></>)
   }
 
+  const ShowComment = (props: {comments: string[] | null}) => {
+    if (props.comments === null){
+      return <></>
+    }
+    return (<>
+      {
+        props.comments.map((comment) => (
+          <Box pt={'20px'}>
+            {comment}
+          </Box>
+        ))
+      }
+    </>)
+  }
+
   return (
     <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden' marginBottom={'10px'}>
       <Box pt='3' pb='6' pl='6' pr='6' bg={'white'}>
@@ -165,11 +181,14 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
             type={props.type}
             universityName={props.author.university.name}
           />
-          <Comment thanksNum={props.thanksNum} commentNum={props.commentNum} />
+          <CommentNum thanksNum={props.thanksNum} commentNum={props.commentNum} />
         </Box> {/* カテゴリ、投稿日、thanks、コメント */}
         {isOpen
           ?
+          <Box>
             <AddComment articleType={props.type} />
+            <ShowComment comments={comments} />
+          </Box>
          :
             <></>
         }

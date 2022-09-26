@@ -21,6 +21,7 @@ export type Article = {
   author: User;
   category?: Maybe<Category>;
   commentNum: Scalars['Int'];
+  comments?: Maybe<Array<Comment>>;
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
@@ -120,14 +121,23 @@ export type CreateArticleMutationVariables = Exact<{
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, category?: { __typename?: 'Category', id: string } | null, author: { __typename?: 'User', id: string } } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType } };
+
+export type CreateCommentMutationVariables = Exact<{
+  content: Scalars['String'];
+  articleId: Scalars['Float'];
+  authorId: Scalars['Float'];
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createcomment: { __typename?: 'Comment', content: string } };
 
 export type GetArticlesQueryVariables = Exact<{
   categoryIds: Array<Scalars['Float']> | Scalars['Float'];
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null, comments?: Array<{ __typename?: 'Comment', content: string }> | null }> };
 
 export type GetCommentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -152,12 +162,6 @@ export const CreateArticleDocument = gql`
     title
     content
     type
-    category {
-      id
-    }
-    author {
-      id
-    }
   }
 }
     `;
@@ -191,6 +195,41 @@ export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
 export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
 export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
+export const CreateCommentDocument = gql`
+    mutation CreateComment($content: String!, $articleId: Float!, $authorId: Float!) {
+  createcomment(content: $content, articleId: $articleId, authorId: $authorId) {
+    content
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *      articleId: // value for 'articleId'
+ *      authorId: // value for 'authorId'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const GetArticlesDocument = gql`
     query getArticles($categoryIds: [Float!]!) {
   articles(categoryIds: $categoryIds) {
@@ -213,6 +252,9 @@ export const GetArticlesDocument = gql`
     }
     category {
       name
+    }
+    comments {
+      content
     }
   }
 }

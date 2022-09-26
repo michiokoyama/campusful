@@ -13,9 +13,13 @@ export class ArticlesResolver {
     const condition =
       categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : undefined
     return this.prisma.article.findMany({
-      include: { author: { include: { university: true } }, category: true },
+      include: {
+        author: { include: { university: true } },
+        category: true,
+        comments: true,
+      },
       where: condition,
-      orderBy: [{ createdAt: 'desc'}, {id: 'desc' }],
+      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     })
   }
 

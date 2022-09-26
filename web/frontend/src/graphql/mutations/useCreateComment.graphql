@@ -5,7 +5,7 @@ mutation CreateComment (
 ) {
   createcomment(
     content: $content,
-    articleId: $categoryId,
+    articleId: $articleId,
     authorId: $authorId,
   ){
     content
