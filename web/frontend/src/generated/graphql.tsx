@@ -19,7 +19,7 @@ export type Scalars = {
 export type Article = {
   __typename?: 'Article';
   author: User;
-  category: Category;
+  category?: Maybe<Category>;
   commentNum: Scalars['Int'];
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
@@ -41,9 +41,18 @@ export type Category = {
   name: Scalars['String'];
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  article: Array<Article>;
+  content: Scalars['String'];
+  id: Scalars['ID'];
+  user: User;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createarticle: Article;
+  createcomment: Comment;
   createuser: User;
 };
 
@@ -54,6 +63,13 @@ export type MutationCreatearticleArgs = {
   content: Scalars['String'];
   title: Scalars['String'];
   type: Scalars['String'];
+};
+
+
+export type MutationCreatecommentArgs = {
+  articleId: Scalars['Float'];
+  authorId: Scalars['Float'];
+  content: Scalars['String'];
 };
 
 
@@ -68,6 +84,7 @@ export type MutationCreateuserArgs = {
 export type Query = {
   __typename?: 'Query';
   articles: Array<Article>;
+  comments: Array<Comment>;
   user: Array<User>;
 };
 
@@ -103,14 +120,19 @@ export type CreateArticleMutationVariables = Exact<{
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, category: { __typename?: 'Category', id: string }, author: { __typename?: 'User', id: string } } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createarticle: { __typename?: 'Article', title: string, content: string, type: ArticleType, category?: { __typename?: 'Category', id: string } | null, author: { __typename?: 'User', id: string } } };
 
 export type GetArticlesQueryVariables = Exact<{
   categoryIds: Array<Scalars['Float']> | Scalars['Float'];
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category: { __typename?: 'Category', name: string } }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null }> };
+
+export type GetCommentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', id: string, content: string }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -223,6 +245,41 @@ export function useGetArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
+export const GetCommentsDocument = gql`
+    query getComments {
+  comments {
+    id
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCommentsQuery(baseOptions?: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+      }
+export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+        }
+export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
+export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
+export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
 export const UsersDocument = gql`
     query users {
   user {

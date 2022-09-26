@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GenderType } from '@prisma/client'
 import { PrismaService } from 'src/prisma.service'
 import { CommentDto } from '../dto/comment.dto'
 
@@ -8,7 +7,7 @@ export class CommentResolver {
   constructor(private prisma: PrismaService) {}
 
   @Query(() => [CommentDto])
-  async user() {
+  async comments() {
     return this.prisma.comment.findMany({
       include: { article: true, author: true },
     })

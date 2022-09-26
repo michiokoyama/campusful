@@ -161,7 +161,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
         <Content content={props.content} />
         <Box mt='2' mb='5'>
           <Category
-            category={props.category}
+            category={{name: props.category?.name}}
             type={props.type}
             universityName={props.author.university.name}
           />

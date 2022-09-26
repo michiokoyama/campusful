@@ -5,6 +5,7 @@
 type Query {
   articles(categoryIds: [Float!]!): [Article!]!
   user: [User!]!
+  comments: [Comment!]!
 }
 
 type Article {
@@ -51,7 +52,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Comment {
+  id: ID!
+  content: String!
+  article: [Article!]!
+  user: User!
+}
+
 type Mutation {
   createarticle(title: String!, content: String!, type: String!, categoryId: Float!, authorId: Float!): Article!
   createuser(firstName: String!, lastName: String!, displayName: String!, gender: String!, email: String!): User!
+  createcomment(content: String!, articleId: Float!, authorId: Float!): Comment!
 }

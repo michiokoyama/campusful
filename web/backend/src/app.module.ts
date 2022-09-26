@@ -9,6 +9,8 @@ import { ArticlesResolver } from './article/presentation/resolver/article.resolv
 import { UserResolver } from './user/presentation/resolver/user.resolver'
 import { PrismaService } from './prisma.service'
 import { UserModule } from './user/user.module'
+import { CommentModule } from './comment/comment.module'
+import { CommentResolver } from './comment/presentation/resolver/comment.resolver'
 
 @Module({
   imports: [
@@ -29,9 +31,16 @@ import { UserModule } from './user/user.module'
       },
     }),
     ArticleModule,
+    CommentModule,
     UserModule,
   ],
   controllers: [],
-  providers: [AppService, PrismaService, ArticlesResolver, UserResolver],
+  providers: [
+    AppService,
+    PrismaService,
+    ArticlesResolver,
+    UserResolver,
+    CommentResolver,
+  ],
 })
 export class AppModule {}
