@@ -7,6 +7,7 @@ import {
   ChakraStyledOptions,
   Flex,
   Input,
+  Textarea,
   useDisclosure,
   useColorModeValue,
   color,
@@ -158,7 +159,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
   }) => {
     const { articleType, articleId, authorId } = props
     const [currentComment, setCurrentComment] = useState('')
-    const handleComment = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
       const text = e.target.value 
       setCurrentComment(text)
     }
@@ -177,7 +178,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     if (articleType === ArticleType.Article){
       return (
         <Box pt={'20px'}>
-          <Input
+          <Textarea
             placeholder='コメントする'
             onChange={(e) => handleComment(e)}
           />
@@ -188,7 +189,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     if (articleType === ArticleType.Question){
       return (
         <Box pt={'20px'}>
-          <Input
+          <Textarea
             placeholder='質問に回答する'
             onChange={(e) => handleComment(e)}
           />
