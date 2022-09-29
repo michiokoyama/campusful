@@ -11,7 +11,12 @@ export class ArticlesResolver {
   }
 
   getKeywordCondition(keyword?: string){
-    const keywordCondition = keyword ? { content: { contains: keyword } } : null
+    if (!keyword){
+      return null
+    }
+    const re = /';%/g
+    const sanitizedKeyword = keyword.replace(re, ' ')
+    const keywordCondition = { content: { contains: sanitizedKeyword } }
     return keywordCondition
   }
 
