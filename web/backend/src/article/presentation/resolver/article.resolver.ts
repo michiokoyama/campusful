@@ -10,14 +10,18 @@ export class ArticlesResolver {
     return categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : null
   }
 
-  getKeywordCondition(keyword?: string){
-    if (!keyword){
+  getKeywordCondition(keywords?: string){
+    if (!keywords){
       return null
     }
     const re = /';%/g
-    const sanitizedKeyword = keyword.replace(re, ' ')
-    const keywordCondition = { content: { contains: sanitizedKeyword } }
-    return keywordCondition
+    const sanitizedKeywords = keywords.replace(re, ' ').replace(/　/, ' ')
+    const keywordCondition = sanitizedKeywords.split(' ').map((keyword) => {
+      return {
+        OR: { title: { contains: keyword }, content: { contains: keyword } },
+      }
+    })
+    return { AND: keywordCondition }
   }
 
   @Query(() => [ArticleDto])
