@@ -18,7 +18,10 @@ export class ArticlesResolver {
     const sanitizedKeywords = keywords.replace(re, ' ').replace(/　/, ' ')
     const keywordCondition = sanitizedKeywords.split(' ').map((keyword) => {
       return {
-        OR: { title: { contains: keyword }, content: { contains: keyword } },
+        OR: [
+          { title: { contains: keyword } },
+          { content: { contains: keyword } },
+        ],
       }
     })
     return { AND: keywordCondition }
