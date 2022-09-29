@@ -52,7 +52,7 @@ const MainContents = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useArticleLists()
   return (<>
-    <Flex bg={'gray.100'} px={{lg: '100px'}}>
+    <Flex bg={'gray.100'} px={{lg: '120px'}}>
       <Box w={{sm: '0px', md: '250px'}}>
         <SidebarContent
           onClose={() => onClose}

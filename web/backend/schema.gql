@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Query {
-  articles(categoryIds: [Float!]!): [Article!]!
+  articles(categoryIds: [Float!]!, keyword: String): [Article!]!
   user: [User!]!
   comments: [Comment!]!
 }

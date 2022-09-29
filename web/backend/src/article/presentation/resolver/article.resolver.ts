@@ -6,19 +6,29 @@ import { ArticleDto, ArticleType } from '../dto/article.dto'
 export class ArticlesResolver {
   constructor(private prisma: PrismaService) {}
 
+  getCategoryCondition(categoryIds: number[]){
+    return categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : null
+  }
+
+  getKeywordCondition(keyword?: string){
+    const keywordCondition = keyword ? { content: { contains: keyword } } : null
+    return keywordCondition
+  }
+
   @Query(() => [ArticleDto])
   async articles(
     @Args({ name: 'categoryIds', type: () => [Float] }) categoryIds: number[],
+    @Args('keyword', { nullable: true }) keyword?: string,
   ) {
-    const condition =
-      categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : undefined
+    const categoryCondition = this.getCategoryCondition(categoryIds)
+    const keywordCondition = this.getKeywordCondition(keyword)
     return this.prisma.article.findMany({
       include: {
         author: { include: { university: true } },
         category: true,
         comments: { include: { author: { include: { university: true } } } },
       },
-      where: condition,
+      where: { AND: [categoryCondition, keywordCondition] },
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     })
   }
