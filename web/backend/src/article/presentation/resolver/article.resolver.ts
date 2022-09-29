@@ -10,8 +10,8 @@ export class ArticlesResolver {
     return categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : null
   }
 
-  getKeywordCondition(keywords?: string){
-    if (!keywords){
+  getKeywordCondition(keywords?: string) {
+    if (!keywords) {
       return null
     }
     const re = /';%/g

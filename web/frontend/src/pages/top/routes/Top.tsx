@@ -78,8 +78,8 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
     ? props.comments.map((comment) => {
         return {
           content: comment.content,
-          displayName: comment.author.displayName,
-          universityName: comment.author.university.name,
+          displayName: comment.author?.displayName ?? '',
+          universityName: comment.author?.university.name ?? '',
           createdAt: new Date(comment.createdAt)
         }})
     : []

@@ -1,5 +1,5 @@
-query getArticles ($categoryIds: [Float!]!) {
-  articles (categoryIds: $categoryIds){
+query getArticles ($categoryIds: [Float!]!, $keyword: String) {
+  articles (categoryIds: $categoryIds, keyword: $keyword){
     id
     type
     title

@@ -23,6 +23,11 @@ export const categoryState = atom({
   default: LinkItems
 })
 
+export const searchKeywordState = atom({
+  key: 'searchKeywordState',
+  default: ''
+})
+
 export const currentCategoryIdState = atom({
   key: 'currentCategoryIdState',
   default: 1,

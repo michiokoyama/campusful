@@ -45,7 +45,7 @@ export type Category = {
 export type Comment = {
   __typename?: 'Comment';
   article: Array<Article>;
-  author: User;
+  author?: Maybe<User>;
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
@@ -93,6 +93,7 @@ export type Query = {
 
 export type QueryArticlesArgs = {
   categoryIds: Array<Scalars['Float']>;
+  keyword?: InputMaybe<Scalars['String']>;
 };
 
 export type University = {
@@ -107,7 +108,7 @@ export type User = {
   displayName: Scalars['String'];
   email: Scalars['String'];
   firstName: Scalars['String'];
-  gender: Scalars['String'];
+  gender?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   lastName: Scalars['String'];
   university: University;
@@ -135,10 +136,11 @@ export type CreateCommentMutation = { __typename?: 'Mutation', createcomment: { 
 
 export type GetArticlesQueryVariables = Exact<{
   categoryIds: Array<Scalars['Float']> | Scalars['Float'];
+  keyword?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender: string, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null, comments?: Array<{ __typename?: 'Comment', content: string, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, university: { __typename?: 'University', name: string } } }> | null }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, type: ArticleType, title: string, content: string, published: boolean, thanksNum: number, commentNum: number, createdAt: any, author: { __typename?: 'User', id: string, displayName: string, gender?: string | null, email: string, university: { __typename?: 'University', name: string } }, category?: { __typename?: 'Category', name: string } | null, comments?: Array<{ __typename?: 'Comment', content: string, createdAt: any, author?: { __typename?: 'User', id: string, displayName: string, university: { __typename?: 'University', name: string } } | null }> | null }> };
 
 export type GetCommentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -148,7 +150,7 @@ export type GetCommentsQuery = { __typename?: 'Query', comments: Array<{ __typen
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, displayName: string, gender: string, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
+export type UsersQuery = { __typename?: 'Query', user: Array<{ __typename?: 'User', id: string, displayName: string, gender?: string | null, email: string, articles: Array<{ __typename?: 'Article', id: string }>, university: { __typename?: 'University', name: string } }> };
 
 
 export const CreateArticleDocument = gql`
@@ -232,8 +234,8 @@ export type CreateCommentMutationHookResult = ReturnType<typeof useCreateComment
 export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const GetArticlesDocument = gql`
-    query getArticles($categoryIds: [Float!]!) {
-  articles(categoryIds: $categoryIds) {
+    query getArticles($categoryIds: [Float!]!, $keyword: String) {
+  articles(categoryIds: $categoryIds, keyword: $keyword) {
     id
     type
     title
@@ -282,6 +284,7 @@ export const GetArticlesDocument = gql`
  * const { data, loading, error } = useGetArticlesQuery({
  *   variables: {
  *      categoryIds: // value for 'categoryIds'
+ *      keyword: // value for 'keyword'
  *   },
  * });
  */
