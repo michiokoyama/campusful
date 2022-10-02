@@ -338,6 +338,7 @@ const TextEditor = () => {
         <Box
           borderWidth='2px'
           height='70vh'
+          overflow='auto'
         >
           <Editor
             editorState={editorState}
