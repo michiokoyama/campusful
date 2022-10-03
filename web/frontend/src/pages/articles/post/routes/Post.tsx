@@ -5,13 +5,15 @@ import {
   useRecoilValue 
 } from "recoil"
 import {
-  Editor,
+//  Editor,
   EditorState,
   RichUtils,
   DraftEditorCommand,
   DefaultDraftBlockRenderMap,
   ContentBlock,
 } from 'draft-js';
+import Editor from '@draft-js-plugins/editor'
+import createImagePlugin from '@draft-js-plugins/image'
 import { Map } from 'immutable'
 import 'draft-js/dist/Draft.css';
 import { stateToHTML } from "draft-js-export-html";
@@ -61,6 +63,7 @@ import {
   currentArticleTypeState,
   currentArticleTitleState,
   currentArticleContentState,
+  contentValidateState,
  } from "../../../../globalState"
 import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
@@ -161,8 +164,23 @@ const SelectArticleCategory = () => {
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ArticleTitle = () => {
   const [currentArticleTitle, setCurrentArticleTitle] = useRecoilState(currentArticleTitleState)
+  const [contentValidatoin, setContentValidation] = useRecoilState(contentValidateState)
+  const isTitleValid = (text: string) => {
+    if (text === ''){
+      return false
+    }
+    //todo: ngの記号を精査する
+    const ngRegExp = /#$¥【】{}/g
+    return !ngRegExp.test(text)
+  }
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentArticleTitle(e.target.value)
+    const isValid = isTitleValid(e.target.value)
+    if (isValid){
+      setContentValidation({title: true})
+    } else {
+      setContentValidation({title: false})
+    }
   }
   return (
     <Input p={1} 
@@ -220,6 +238,7 @@ const ShipItButton = () => {
   const currentArticleType = useRecoilValue(currentArticleTypeState)
   const currentArticleTitle = useRecoilValue(currentArticleTitleState)
   const currentArticleContent = useRecoilValue(currentArticleContentState)
+  const validationState = useRecoilValue(contentValidateState)
 
   const { createArticleMutation, data, loading, error } = useCreateArticle({variables: {
     title: currentArticleTitle,
@@ -229,6 +248,10 @@ const ShipItButton = () => {
     authorId: 31,  // todo: 実際のユーザIDを設定する
   }})
   const handleShipIt = () => {
+    if (validationState.title === false){
+      alert('タイトルが不正です')
+      return
+    }
     createArticleMutation()
     // modalを出してtopページに遷移する
     onOpen()
@@ -366,6 +389,7 @@ const TextEditor = () => {
     }
   })
   const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
+  const imagePlugin = createImagePlugin()
 
   return (
     <>
@@ -410,6 +434,7 @@ const TextEditor = () => {
             onChange={(e) => handleOnChange(e)}
             handleKeyCommand={handleKeyCommand}
             blockRenderMap={extendedBlockRenderMap}
+            plugins={[imagePlugin]}
           />
         </Box>
     </>

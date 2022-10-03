@@ -47,3 +47,8 @@ export const currentArticleContentState = atom({
   key: 'currentArticleContentState',
   default: '',
 })
+
+export const contentValidateState = atom({
+  key: 'contentValidateState',
+  default: {title: true},
+})
