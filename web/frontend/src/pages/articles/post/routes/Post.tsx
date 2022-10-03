@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react';
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { 
   useRecoilState,
   useRecoilValue 
@@ -19,12 +20,20 @@ import {
   Box,
   Button,
   Input,
+  Link,
   List,
   ListItem,
   ListIcon,
   Flex,
   Heading,
   Icon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Select,
   Stack,
   Tabs,
@@ -32,6 +41,7 @@ import {
   Tab,
   TabPanel,
   TabPanels,
+  useDisclosure,
 } from '@chakra-ui/react';
 import {
   MdCheckCircle,
@@ -55,7 +65,7 @@ import {
 import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
 import { IconType } from 'react-icons';
-import { postContentsMarginX } from '../../../../const'
+import { colors, postContentsMarginX } from '../../../../const'
 
 const PostBody = () => {
   return (
@@ -163,8 +173,49 @@ const ArticleTitle = () => {
   )
 }
 
+const AfterPostModal = (props: {
+  isOpen: boolean, onClose: any
+}) => {
+  const { isOpen, onClose } = props
+  return (
+    <>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>投稿が完了しました</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box>記事作成お疲れ様でした。</Box>
+            <Box>書いていただいた記事は、必ず誰かの役に立ちます。</Box>
+          </ModalBody>
+          <ModalFooter>
+
+          <Button
+            backgroundColor={colors.theme}
+            color={'white'}
+            mr={3}
+            onClick={() => window.location.reload()}
+          >
+            続けて記事を作成する
+          </Button>
+          <Link as={ReactRouterLink} to="/" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+            <Button
+              variant='ghost'
+            >
+              トップページに戻る
+            </Button>
+          </Link>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  )
+}
+
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ShipItButton = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const currentCategoryId = useRecoilValue(currentCategoryIdState)
   const currentArticleType = useRecoilValue(currentArticleTypeState)
   const currentArticleTitle = useRecoilValue(currentArticleTitleState)
@@ -175,10 +226,15 @@ const ShipItButton = () => {
     content: currentArticleContent,
     type: currentArticleType,
     categoryId: currentCategoryId,
-    authorId: 1,
+    authorId: 31,  // todo: 実際のユーザIDを設定する
   }})
-  const handleShipIt = () => createArticleMutation()
+  const handleShipIt = () => {
+    createArticleMutation()
+    // modalを出してtopページに遷移する
+    onOpen()
+  }
   return (
+    <>
     <Stack
       flex={{ base: 1, md: 0 }}
       justify={'flex-end'}
@@ -211,6 +267,8 @@ const ShipItButton = () => {
         投稿する
       </Button>
     </Stack>
+    <AfterPostModal isOpen={isOpen} onClose={onClose} />
+    </>
  )
 }
 
