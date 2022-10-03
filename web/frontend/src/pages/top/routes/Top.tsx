@@ -25,6 +25,7 @@ import { SidebarContent } from '../../../components/common/SideBar'
 import { SearchBox } from '../../../components/common/SearchBox';
 import { colors } from '../../../const'
 import { ArticleType, GetArticlesQuery } from 'generated/graphql';
+import { mainContentsMarginX } from '../../../const'
 
 export const Top = () => {
   return (
@@ -52,7 +53,7 @@ const MainContents = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { data } = useArticleLists()
   return (<>
-    <Flex bg={'gray.100'} px={{lg: '120px'}}>
+    <Flex bg={'gray.100'} px={{lg: mainContentsMarginX}}>
       <Box w={{sm: '0px', md: '250px'}}>
         <SidebarContent
           onClose={() => onClose}

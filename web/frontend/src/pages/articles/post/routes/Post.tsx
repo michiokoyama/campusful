@@ -55,10 +55,17 @@ import {
 import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
 import { IconType } from 'react-icons';
+import { postContentsMarginX } from '../../../../const'
 
 const PostBody = () => {
   return (
-    <Box maxW='xg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+    <Box
+      maxW='xg'
+      borderWidth='1px'
+      borderRadius='lg'
+      overflow='hidden'
+      px={{lg: postContentsMarginX}}
+    >
       <SelectArticleType />
       <SelectArticleCategory />
       <ArticleTitle />

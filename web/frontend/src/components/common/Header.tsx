@@ -30,18 +30,17 @@ import {
   FiTrendingUp,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
+import { headerMarginX } from '../../const'
 
 export const Header = () => {
   return <HeaderBase />
 }
 
-const leftMargin = '50px'
-
 const HeaderBase = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box bg={'white'} px={{lg: '50px'}}>
+    <Box bg={'white'} px={{lg: headerMarginX}}>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
