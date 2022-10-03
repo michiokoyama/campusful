@@ -344,7 +344,7 @@ const TextEditor = () => {
       </Flex>
         <Box
           borderWidth='2px'
-          height='70vh'
+          height='45vh'
           overflow='auto'
         >
           <Editor
