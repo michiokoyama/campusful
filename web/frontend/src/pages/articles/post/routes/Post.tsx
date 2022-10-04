@@ -164,13 +164,13 @@ const SelectArticleCategory = () => {
 // 記事のカテゴリ（学問、留学、サークルなど）
 const ArticleTitle = () => {
   const [currentArticleTitle, setCurrentArticleTitle] = useRecoilState(currentArticleTitleState)
-  const [contentValidatoin, setContentValidation] = useRecoilState(contentValidateState)
+  const [contentValidation, setContentValidation] = useRecoilState(contentValidateState)
   const isTitleValid = (text: string) => {
     if (text === ''){
       return false
     }
     //todo: ngの記号を精査する
-    const ngRegExp = /#$¥【】{}/g
+    const ngRegExp = /[#$¥【】{}]/g
     return !ngRegExp.test(text)
   }
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
