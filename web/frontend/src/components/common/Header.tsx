@@ -88,13 +88,19 @@ const HeaderBase = () => {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}>
-            ログイン
-          </Button>
+          <Link as={ReactRouterLink} to="/login" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'gray'}
+              backgroundColor={'white'}
+              _hover={{
+                bg: 'white',
+              }}>
+              ログイン
+            </Button>
+          </Link>
 
           <Link as={ReactRouterLink} to="/articles/post" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
             <Button

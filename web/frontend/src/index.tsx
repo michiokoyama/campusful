@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { Post } from './pages/articles/post';
+import { Login } from './pages/login';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react'
 import {
@@ -38,6 +39,7 @@ root.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/articles/post" element={<Post />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
      </React.StrictMode>
