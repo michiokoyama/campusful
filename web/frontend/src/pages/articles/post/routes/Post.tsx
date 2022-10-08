@@ -183,11 +183,14 @@ const ArticleTitle = () => {
     }
   }
   return (
-    <Input p={1} 
-      placeholder='タイトルを入力してください。'
-      onChange={(e) => handleOnChange(e)}
-      value={currentArticleTitle}
-    />
+    <>
+      <Input p={1} 
+        placeholder='タイトルを入力してください。'
+        onChange={(e) => handleOnChange(e)}
+        value={currentArticleTitle}
+      />
+    {!contentValidation.title ? <>不正文字です</> : <></>}
+    </>
   )
 }
 
