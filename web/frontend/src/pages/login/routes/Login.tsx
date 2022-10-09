@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link as ReactRouterLink } from 'react-router-dom'
 import {
   Flex,
   Heading,
@@ -20,11 +21,105 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
-export const Login = () => {
+const CreateAccountForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  return (
+    <Box minW={{ base: "90%", md: "468px" }}>
+      <form>
+        <Stack
+          spacing={4}
+          p="1rem"
+          backgroundColor="whiteAlpha.900"
+          boxShadow="md"
+          minHeight={'213px'}
+        >
+
+          <Link as={ReactRouterLink} to="/createAccount" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+            <Button
+              borderRadius={0}
+              type="submit"
+              variant="solid"
+              colorScheme="teal"
+              width="full"
+            >
+              大学のメールアドレスで新規会員登録
+            </Button>
+          </Link>
+            <FormControl>
+            <FormHelperText textAlign="right">
+              <Link>パスワードをお忘れですか？</Link>
+            </FormHelperText>
+            </FormControl>
+        </Stack>
+      </form>
+    </Box>
+ 
+  )
+}
+
+const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowClick = () => setShowPassword(!showPassword);
+
+  return (
+    <Box minW={{ base: "90%", md: "468px" }}>
+      <form>
+        <Stack
+          spacing={4}
+          p="1rem"
+          backgroundColor="whiteAlpha.900"
+          boxShadow="md"
+          minHeight={'213px'}
+        >
+          <FormControl>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<CFaUserAlt color="gray.300" />}
+              />
+              <Input type="email" placeholder="大学のメールアドレス" />
+            </InputGroup>
+          </FormControl>
+          <FormControl>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                color="gray.300"
+                children={<CFaLock color="gray.300" />}
+              />
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="パスワード"
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                  {showPassword ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <FormHelperText textAlign="right">
+              <Link>パスワードをお忘れですか？</Link>
+            </FormHelperText>
+          </FormControl>
+          <Button
+            borderRadius={0}
+            type="submit"
+            variant="solid"
+            colorScheme="teal"
+            width="full"
+          >
+            Login
+          </Button>
+        </Stack>
+      </form>
+    </Box>
+ 
+  )
+}
+
+export const Login = () => {
   return (
     <Flex
       flexDirection="column"
@@ -42,57 +137,11 @@ export const Login = () => {
       >
         <Avatar bg="teal.500" />
         <Heading color="teal.400">Campusful</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
-            <Stack
-              spacing={4}
-              p="1rem"
-              backgroundColor="whiteAlpha.900"
-              boxShadow="md"
-            >
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="email" placeholder="email address" />
-                </InputGroup>
-              </FormControl>
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
-                  />
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                      {showPassword ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                <FormHelperText textAlign="right">
-                  <Link>パスワードをお忘れですか？</Link>
-                </FormHelperText>
-              </FormControl>
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="teal"
-                width="full"
-              >
-                Login
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Stack>
+        <Flex>
+          <CreateAccountForm />
+          <LoginForm />
+        </Flex>
+     </Stack>
       <Box>
         まだアカウントがありませんか?{"  "}
         <Link color="teal.500" href="#">
