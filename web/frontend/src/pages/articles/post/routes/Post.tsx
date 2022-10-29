@@ -14,8 +14,13 @@ import {
   ContentBlock,
   DraftHandleValue,
 } from 'draft-js';
-import Editor from '@draft-js-plugins/editor'
+import Editor, { composeDecorators } from '@draft-js-plugins/editor'
 import createImagePlugin from '@draft-js-plugins/image'
+import createAlignmentPlugin from '@draft-js-plugins/alignment';
+import createFocusPlugin from '@draft-js-plugins/focus';
+import createResizeablePlugin from '@draft-js-plugins/resizeable';
+import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
+import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
 import { Map } from 'immutable'
 import 'draft-js/dist/Draft.css';
 import { stateToHTML } from "draft-js-export-html";
@@ -386,15 +391,6 @@ const TextEditor = () => {
     const blockStyle = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType()
     return type === blockStyle ? 'blue' : ''
   }
-  const blockRenderMap = Map({
-    'header-one': {
-      element: 'h1',
-      wrapper: <Heading />,
-    }
-  })
-  const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
-  const imagePlugin = createImagePlugin()
-
   const handleDroppedFiles = (selection: SelectionState, files: Blob[]) => {
     const formData = new FormData();
     formData.append('file',files[0]) 
@@ -446,6 +442,40 @@ const TextEditor = () => {
     return null;
   }, [editorState]);
 
+  const blockRenderMap = Map({
+    'header-one': {
+      element: 'h1',
+      wrapper: <Heading />,
+    }
+  })
+  const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap)
+  const focusPlugin = createFocusPlugin()
+  const resizeablePlugin = createResizeablePlugin()
+  const blockDndPlugin = createBlockDndPlugin()
+  const alignmentPlugin = createAlignmentPlugin()
+  // const { AlignmentTool } = alignmentPlugin
+  const decorator = composeDecorators(
+    resizeablePlugin.decorator,
+    alignmentPlugin.decorator,
+    focusPlugin.decorator,
+    blockDndPlugin.decorator
+  )
+  const imagePlugin = createImagePlugin({ decorator })
+  /*
+  const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
+    handleUpload: handleDroppedFiles,
+    addImage: imagePlugin.addImage,
+  })
+  */
+  const plugins = [
+    // dragNDropFileUploadPlugin,
+    blockDndPlugin,
+    focusPlugin,
+    alignmentPlugin,
+    resizeablePlugin,
+    imagePlugin,
+  ]
+
   return (
     <>
       <Flex>
@@ -491,7 +521,7 @@ const TextEditor = () => {
             handleDroppedFiles={handleDroppedFiles}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={blockRendererFn}
-            plugins={[imagePlugin]}
+            plugins={plugins}
           />
         </Box>
     </>
