@@ -29,10 +29,10 @@ export const CreateAccount = () => {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign up
+            Campusfulユーザ登録
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            to enjoy your campus life ✌️
           </Text>
         </Stack>
         <Box
@@ -44,23 +44,54 @@ export const CreateAccount = () => {
             <HStack>
               <Box>
                 <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>名字</FormLabel>
                   <Input type="text" />
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
+                <FormControl id="lastName" isRequired>
+                  <FormLabel>名前</FormLabel>
                   <Input type="text" />
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <FormLabel>大学のEmailアドレス</FormLabel>
+              <Input placeholder='大学ドメイン以外のメールアドレス（gmailなど）はご利用になれません' type="email" />
+            </FormControl>
+            <FormControl id="university" isRequired>
+              <FormLabel>大学名</FormLabel>
+              <Input type="text" />
+            </FormControl>
+            <FormControl id="university">
+              <FormLabel>学部名</FormLabel>
+              <Input type="text" />
+            </FormControl>
+            <FormControl id="university">
+              <FormLabel>学部名</FormLabel>
+              <Input type="text" />
+            </FormControl>
+            <FormControl id="email">
+              <FormLabel>学年</FormLabel>
+              <Input type="text" />
             </FormControl>
             <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>パスワード</FormLabel>
+              <InputGroup>
+                <Input type={showPassword ? 'text' : 'password'} />
+                <InputRightElement h={'full'}>
+                  <Button
+                    variant={'ghost'}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }>
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl id="password" isRequired>
+              <FormLabel>パスワード（再入力）</FormLabel>
               <InputGroup>
                 <Input type={showPassword ? 'text' : 'password'} />
                 <InputRightElement h={'full'}>

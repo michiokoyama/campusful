@@ -1,16 +1,18 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useCallback } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { 
   useRecoilState,
   useRecoilValue 
 } from "recoil"
 import {
-//  Editor,
+  AtomicBlockUtils,
   EditorState,
   RichUtils,
+  SelectionState,
   DraftEditorCommand,
   DefaultDraftBlockRenderMap,
   ContentBlock,
+  DraftHandleValue,
 } from 'draft-js';
 import Editor from '@draft-js-plugins/editor'
 import createImagePlugin from '@draft-js-plugins/image'
@@ -375,7 +377,6 @@ const TextEditor = () => {
   const toggleBlockButtons = (type: ButtonTypeString) => {
     const selection = editorState.getSelection()
     const blockStyle = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType()
-    console.log(blockStyle)
     // このstateはdraft.js側のstateと合わせる必要がある。
     buttonToggleState[type] = !(type === blockStyle)
     setButtonToggle(buttonToggleState)
@@ -393,6 +394,57 @@ const TextEditor = () => {
   })
   const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
   const imagePlugin = createImagePlugin()
+
+  const handleDroppedFiles = (selection: SelectionState, files: Blob[]) => {
+    const formData = new FormData();
+    formData.append('file',files[0]) 
+    setEditorState(insertImage('https://images.pexels.com/photos/54539/pexels-photo-54539.jpeg'))
+    return "handled" as DraftHandleValue
+    /*
+    fetch('/api/uploads', 
+    {method: 'POST', body: formData})
+    .then(res => res.json())
+    .then(data => {
+      if (data.file) { 
+         setEditorState(insertImage(data.file)) //created below
+      }
+    }).catch(err => {
+        console.log(err) 
+    })
+    */
+  }
+  
+  const insertImage = (url: string) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+      'IMAGE',
+      'IMMUTABLE',
+      { src: url }
+    )
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
+  };
+
+  const blockRendererFn = useCallback((block: ContentBlock) => {
+    if(block.getType() === "atomic") {
+      const entityKey = block.getEntityAt(0);
+      if(!entityKey) return null;
+      const entity = editorState.getCurrentContent().getEntity(entityKey);
+      if (!entity) return null;
+      if(entity.getType() === "image") {
+        const data = entity.getData();
+        return {
+          component: Image,
+          editable: false,
+          props: {
+            src: data.src,
+          }
+        }
+      }
+    }
+    return null;
+  }, [editorState]);
 
   return (
     <>
@@ -436,7 +488,9 @@ const TextEditor = () => {
             editorState={editorState}
             onChange={(e) => handleOnChange(e)}
             handleKeyCommand={handleKeyCommand}
+            handleDroppedFiles={handleDroppedFiles}
             blockRenderMap={extendedBlockRenderMap}
+            blockRendererFn={blockRendererFn}
             plugins={[imagePlugin]}
           />
         </Box>
