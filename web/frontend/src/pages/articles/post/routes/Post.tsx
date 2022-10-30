@@ -256,7 +256,7 @@ const ShipItButton = () => {
     content: currentArticleContent,
     type: currentArticleType,
     categoryId: currentCategoryId,
-    authorId: 31,  // todo: 実際のユーザIDを設定する
+    authorId: 33,  // todo: 実際のユーザIDを設定する
   }})
   const handleShipIt = () => {
     if (validationState.title === false){
@@ -304,6 +304,10 @@ const ShipItButton = () => {
     <AfterPostModal isOpen={isOpen} onClose={onClose} />
     </>
  )
+}
+
+const Image = (props: { src: string | undefined; }) => {
+  return <img src={props.src} alt='' />
 }
 
 const TextEditor = () => {
@@ -421,7 +425,6 @@ const TextEditor = () => {
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
-    console.log("### insertImage")
     return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
   };
 
@@ -434,11 +437,13 @@ const TextEditor = () => {
       if(entity.getType() === "IMAGE") {
         const data = entity.getData();
         return {
-          component: Image,
+          component: Media,
           editable: false,
+          /*
           props: {
             src: data.src,
           }
+          */
         }
       }
     }
@@ -478,6 +483,19 @@ const TextEditor = () => {
     resizeablePlugin,
     imagePlugin,
   ]
+
+  const Media = (props: { contentState: { getEntity: (arg0: any) => any; }; block: { getEntityAt: (arg0: number) => any; }; }) => {
+    const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+    const { src } = entity.getData();
+    const type = entity.getType();
+
+    let media;
+    if (type === "image") {
+      media = <Image src={src} />;
+    }
+
+    return media;
+  };
 
   return (
     <>
