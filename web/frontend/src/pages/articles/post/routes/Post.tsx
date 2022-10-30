@@ -1,10 +1,11 @@
-import React, { ReactNode, useState, useCallback } from 'react';
+import React, { ReactNode, useState, useCallback, useRef } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { 
   useRecoilState,
   useRecoilValue 
 } from "recoil"
 import {
+  convertFromRaw,
   AtomicBlockUtils,
   EditorState,
   RichUtils,
@@ -76,6 +77,57 @@ import { useCreateArticle} from "../hooks/useCreateArticle"
 import { ArticleType } from 'generated/graphql';
 import { IconType } from 'react-icons';
 import { colors, postContentsMarginX } from '../../../../const'
+
+/* eslint-disable */
+const initialData = {
+  entityMap: {
+    0: {
+      type: "IMAGE",
+      mutability: "IMMUTABLE",
+      data: {
+        src:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
+      }
+    }
+  },
+  blocks: [
+    {
+      key: "9gm3s",
+      text:
+        "You can have images in your text field. This is a very rudimentary example, but you can enhance the image plugin with resizing, focus or alignment plugins.",
+      type: "unstyled",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
+    },
+    {
+      key: "ov7r",
+      text: " ",
+      type: "atomic",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [
+        {
+          offset: 0,
+          length: 1,
+          key: 0
+        }
+      ],
+      data: {}
+    },
+    {
+      key: "e23a8",
+      text: "See advanced examples further down …",
+      type: "unstyled",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
+    }
+  ]
+} as Draft.DraftModel.Encoding.RawDraftContentState
+/* eslint-enable */
 
 const PostBody = () => {
   return (
@@ -306,8 +358,10 @@ const ShipItButton = () => {
 }
 
 const TextEditor = () => {
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
+  const initialState = EditorState.createWithContent(convertFromRaw(initialData))
+  const [editorState, setEditorState] = useState<EditorState>(initialState)
   const [currentArticleContent, setCurrentArticleContent] = useRecoilState(currentArticleContentState)
+  const editorRef = useRef<Editor>(null)
 
   const BUTTON_TYPE_STRING_LIST = [
     'header-one',
@@ -342,10 +396,9 @@ const TextEditor = () => {
     {type: "header-one", text: "見出し"},
   ]
 
-  const handleOnChange = (e: React.SetStateAction<EditorState>) => {
-    setEditorState(e)
-    const contentHtml = stateToHTML(editorState.getCurrentContent())
-    setCurrentArticleContent(contentHtml)
+  const handleOnChange = (newEditorState: EditorState) => {
+    console.log("#######", newEditorState)
+    setEditorState(newEditorState)
   }
 
   const handleKeyCommand = (command: DraftEditorCommand) => {
@@ -419,6 +472,7 @@ const TextEditor = () => {
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    console.log("### insertImage")
     return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
   };
 
@@ -428,7 +482,7 @@ const TextEditor = () => {
       if(!entityKey) return null;
       const entity = editorState.getCurrentContent().getEntity(entityKey);
       if (!entity) return null;
-      if(entity.getType() === "image") {
+      if(entity.getType() === "IMAGE") {
         const data = entity.getData();
         return {
           component: Image,
@@ -453,7 +507,7 @@ const TextEditor = () => {
   const resizeablePlugin = createResizeablePlugin()
   const blockDndPlugin = createBlockDndPlugin()
   const alignmentPlugin = createAlignmentPlugin()
-  // const { AlignmentTool } = alignmentPlugin
+  const { AlignmentTool } = alignmentPlugin
   const decorator = composeDecorators(
     resizeablePlugin.decorator,
     alignmentPlugin.decorator,
@@ -463,8 +517,8 @@ const TextEditor = () => {
   const imagePlugin = createImagePlugin({ decorator })
   /*
   const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
-    handleUpload: handleDroppedFiles,
-    addImage: imagePlugin.addImage,
+    handleUpload: () => handleDroppedFiles,
+    addImage: (editorState, src) => imagePlugin.addImage(editorState, src, undefined),
   })
   */
   const plugins = [
@@ -513,15 +567,18 @@ const TextEditor = () => {
           borderWidth='2px'
           height='45vh'
           overflow='auto'
+          onClick={() => editorRef.current?.focus()}
         >
           <Editor
             editorState={editorState}
-            onChange={(e) => handleOnChange(e)}
+            // これがあるとimageのresizeが効かない
+            onChange={handleOnChange}
             handleKeyCommand={handleKeyCommand}
             handleDroppedFiles={handleDroppedFiles}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={blockRendererFn}
             plugins={plugins}
+            ref={editorRef}
           />
         </Box>
     </>
