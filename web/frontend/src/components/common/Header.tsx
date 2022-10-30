@@ -30,7 +30,7 @@ import {
   FiTrendingUp,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
-import { headerMarginX } from '../../const'
+import { headerMarginX, colors } from '../../const'
 
 export const Header = () => {
   return <HeaderBase />
@@ -71,7 +71,7 @@ const HeaderBase = () => {
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
               marginLeft={{md: '60px', sm: '0px'}}
-              color={useColorModeValue('#98a820', 'white')}
+              color={useColorModeValue(colors.theme, 'white')}
               fontWeight={'bold'}
               fontSize={'lg'}
             >
@@ -108,7 +108,7 @@ const HeaderBase = () => {
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}
-              backgroundColor={'#98a820'}
+              backgroundColor={colors.theme}
               bg={'pink.400'}
               _hover={{
                 bg: 'green.300',
