@@ -106,7 +106,7 @@ const ArticleLists = (props: GetArticlesQuery['articles'][number]) => {
   const Content = (props: {content: string}) => {
     return (
       <Box
-        dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content)}}
+        dangerouslySetInnerHTML={{__html: sanitizeHtml(props.content, {allowedTags:['img', 'figure']})}}
         noOfLines={noOfLinesOfContent}
         onClick={onToggle}
         _hover={{cursor: 'pointer'}}
