@@ -78,57 +78,6 @@ import { ArticleType } from 'generated/graphql';
 import { IconType } from 'react-icons';
 import { colors, postContentsMarginX } from '../../../../const'
 
-/* eslint-disable */
-const initialData = {
-  entityMap: {
-    0: {
-      type: "IMAGE",
-      mutability: "IMMUTABLE",
-      data: {
-        src:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-      }
-    }
-  },
-  blocks: [
-    {
-      key: "9gm3s",
-      text:
-        "You can have images in your text field. This is a very rudimentary example, but you can enhance the image plugin with resizing, focus or alignment plugins.",
-      type: "unstyled",
-      depth: 0,
-      inlineStyleRanges: [],
-      entityRanges: [],
-      data: {}
-    },
-    {
-      key: "ov7r",
-      text: " ",
-      type: "atomic",
-      depth: 0,
-      inlineStyleRanges: [],
-      entityRanges: [
-        {
-          offset: 0,
-          length: 1,
-          key: 0
-        }
-      ],
-      data: {}
-    },
-    {
-      key: "e23a8",
-      text: "See advanced examples further down …",
-      type: "unstyled",
-      depth: 0,
-      inlineStyleRanges: [],
-      entityRanges: [],
-      data: {}
-    }
-  ]
-} as Draft.DraftModel.Encoding.RawDraftContentState
-/* eslint-enable */
-
 const PostBody = () => {
   return (
     <Box
@@ -358,8 +307,7 @@ const ShipItButton = () => {
 }
 
 const TextEditor = () => {
-  const initialState = EditorState.createWithContent(convertFromRaw(initialData))
-  const [editorState, setEditorState] = useState<EditorState>(initialState)
+  const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty())
   const [currentArticleContent, setCurrentArticleContent] = useRecoilState(currentArticleContentState)
   const editorRef = useRef<Editor>(null)
 
@@ -397,8 +345,9 @@ const TextEditor = () => {
   ]
 
   const handleOnChange = (newEditorState: EditorState) => {
-    console.log("#######", newEditorState)
     setEditorState(newEditorState)
+    const contentHtml = stateToHTML(editorState.getCurrentContent())
+    setCurrentArticleContent(contentHtml)
   }
 
   const handleKeyCommand = (command: DraftEditorCommand) => {
