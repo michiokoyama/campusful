@@ -78,6 +78,20 @@ import { ArticleType } from 'generated/graphql';
 import { IconType } from 'react-icons';
 import { colors, postContentsMarginX } from '../../../../const'
 
+const focusPlugin = createFocusPlugin()
+const resizeablePlugin = createResizeablePlugin()
+const blockDndPlugin = createBlockDndPlugin()
+const alignmentPlugin = createAlignmentPlugin()
+const { AlignmentTool } = alignmentPlugin
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  alignmentPlugin.decorator,
+  focusPlugin.decorator,
+  blockDndPlugin.decorator
+)
+const imagePlugin = createImagePlugin({ decorator })
+
+
 const PostBody = () => {
   return (
     <Box
@@ -439,11 +453,6 @@ const TextEditor = () => {
         return {
           component: Media,
           editable: false,
-          /*
-          props: {
-            src: data.src,
-          }
-          */
         }
       }
     }
@@ -457,18 +466,6 @@ const TextEditor = () => {
     }
   })
   const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap)
-  const focusPlugin = createFocusPlugin()
-  const resizeablePlugin = createResizeablePlugin()
-  const blockDndPlugin = createBlockDndPlugin()
-  const alignmentPlugin = createAlignmentPlugin()
-  const { AlignmentTool } = alignmentPlugin
-  const decorator = composeDecorators(
-    resizeablePlugin.decorator,
-    alignmentPlugin.decorator,
-    focusPlugin.decorator,
-    blockDndPlugin.decorator
-  )
-  const imagePlugin = createImagePlugin({ decorator })
   /*
   const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
     handleUpload: () => handleDroppedFiles,
@@ -538,7 +535,6 @@ const TextEditor = () => {
         >
           <Editor
             editorState={editorState}
-            // これがあるとimageのresizeが効かない
             onChange={handleOnChange}
             handleKeyCommand={handleKeyCommand}
             handleDroppedFiles={handleDroppedFiles}
