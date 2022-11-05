@@ -11,6 +11,8 @@ import { PrismaService } from './prisma.service'
 import { UserModule } from './user/user.module'
 import { CommentModule } from './comment/comment.module'
 import { CommentResolver } from './comment/presentation/resolver/comment.resolver'
+import { UploadModule } from './upload/upload.module'
+import { UploadsResolver } from './upload/presentation/resolver/upload.resolver'
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { CommentResolver } from './comment/presentation/resolver/comment.resolve
     ArticleModule,
     CommentModule,
     UserModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [
@@ -41,6 +44,7 @@ import { CommentResolver } from './comment/presentation/resolver/comment.resolve
     ArticlesResolver,
     UserResolver,
     CommentResolver,
+    UploadsResolver,
   ],
 })
 export class AppModule {}
