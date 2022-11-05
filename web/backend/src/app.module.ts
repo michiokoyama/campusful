@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module'
 import { CommentModule } from './comment/comment.module'
 import { CommentResolver } from './comment/presentation/resolver/comment.resolver'
 import { UploadModule } from './upload/upload.module'
+import { ServeStaticModule } from '@nestjs/serve-static'
 
 @Module({
   imports: [
@@ -30,6 +31,9 @@ import { UploadModule } from './upload/upload.module'
         }
         return error
       },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'uploads'),
     }),
     ArticleModule,
     CommentModule,

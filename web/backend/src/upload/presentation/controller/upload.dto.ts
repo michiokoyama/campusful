@@ -21,4 +21,5 @@ export class UploadDto {
 export class InputDataFileUploadResponse {
   @ApiProperty({ type: Boolean })
   readonly success!: boolean
+  readonly fileName!: string
 }

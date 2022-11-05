@@ -414,14 +414,14 @@ const TextEditor = () => {
   const handleDroppedFiles = (selection: SelectionState, files: Blob[]) => {
     const formData = new FormData();
     formData.append('imageFile',files[0]) 
-    setEditorState(insertImage('https://images.pexels.com/photos/54539/pexels-photo-54539.jpeg'))
+    // setEditorState(insertImage('https://images.pexels.com/photos/54539/pexels-photo-54539.jpeg'))
     // todo: 環境に応じてURLを変更する
     fetch('http://localhost:4000/upload', 
     {method: 'POST', body: formData})
     .then(res => res.json())
     .then(data => {
-      if (data.file) { 
-         setEditorState(insertImage(data.file)) //created below
+      if (data.fileName) { 
+         setEditorState(insertImage(`http://localhost:4000/${data.fileName}`)) //created below
       }
     }).catch(err => {
         console.log(err) 

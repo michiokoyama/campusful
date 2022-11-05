@@ -77,9 +77,11 @@ export class UploadsController {
   )
   async uploadimage(
     @UploadedFile() imageFile: Express.Multer.File,
-    // ): Promise<InputDataFileUploadResponse> {
-  ): Promise<boolean> {
+  ): Promise<InputDataFileUploadResponse> {
     console.log('######', imageFile)
-    return true
+    return {
+      success: true,
+      fileName: imageFile.filename,
+    }
   }
 }
