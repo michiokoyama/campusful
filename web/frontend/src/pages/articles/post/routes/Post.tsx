@@ -413,11 +413,10 @@ const TextEditor = () => {
   }
   const handleDroppedFiles = (selection: SelectionState, files: Blob[]) => {
     const formData = new FormData();
-    formData.append('file',files[0]) 
+    formData.append('imageFile',files[0]) 
     setEditorState(insertImage('https://images.pexels.com/photos/54539/pexels-photo-54539.jpeg'))
-    return "handled" as DraftHandleValue
-    /*
-    fetch('/api/uploads', 
+    // todo: 環境に応じてURLを変更する
+    fetch('http://localhost:4000/upload', 
     {method: 'POST', body: formData})
     .then(res => res.json())
     .then(data => {
@@ -427,7 +426,7 @@ const TextEditor = () => {
     }).catch(err => {
         console.log(err) 
     })
-    */
+    return "handled" as DraftHandleValue
   }
   
   const insertImage = (url: string) => {

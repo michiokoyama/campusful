@@ -6,7 +6,7 @@ import { ArticleDto, ArticleType } from '../dto/article.dto'
 export class ArticlesResolver {
   constructor(private prisma: PrismaService) {}
 
-  getCategoryCondition(categoryIds: number[]){
+  getCategoryCondition(categoryIds: number[]) {
     return categoryIds.length > 0 ? { categoryId: { in: categoryIds } } : null
   }
 

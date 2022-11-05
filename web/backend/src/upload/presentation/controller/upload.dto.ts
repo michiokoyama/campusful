@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { Field, ObjectType } from '@nestjs/graphql'
 
 @ObjectType('Upload', {
@@ -15,4 +16,9 @@ export class UploadDto {
     nullable: false,
   })
   fileUrl!: string
+}
+
+export class InputDataFileUploadResponse {
+  @ApiProperty({ type: Boolean })
+  readonly success!: boolean
 }

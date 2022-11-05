@@ -12,7 +12,6 @@ import { UserModule } from './user/user.module'
 import { CommentModule } from './comment/comment.module'
 import { CommentResolver } from './comment/presentation/resolver/comment.resolver'
 import { UploadModule } from './upload/upload.module'
-import { UploadsResolver } from './upload/presentation/resolver/upload.resolver'
 
 @Module({
   imports: [
@@ -44,7 +43,6 @@ import { UploadsResolver } from './upload/presentation/resolver/upload.resolver'
     ArticlesResolver,
     UserResolver,
     CommentResolver,
-    UploadsResolver,
   ],
 })
 export class AppModule {}
