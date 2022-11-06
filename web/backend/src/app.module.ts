@@ -13,6 +13,11 @@ import { CommentModule } from './comment/comment.module'
 import { CommentResolver } from './comment/presentation/resolver/comment.resolver'
 import { UploadModule } from './upload/upload.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
+import { AppController } from './app.controller'
+import { UserService } from './user/user.service'
+import { ArticleService } from './article/article.service'
+import { AuthService } from './auth/auth.service'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -39,14 +44,18 @@ import { ServeStaticModule } from '@nestjs/serve-static'
     CommentModule,
     UserModule,
     UploadModule,
+    AuthModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     AppService,
     PrismaService,
+    UserService,
+    ArticleService,
     ArticlesResolver,
     UserResolver,
     CommentResolver,
+    AuthService,
   ],
 })
 export class AppModule {}

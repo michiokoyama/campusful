@@ -1,7 +1,18 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Request,
+  UseGuards,
+} from '@nestjs/common'
 import { UserService } from './user/user.service'
 import { ArticleService } from './article/article.service'
 import { User as UserModel, Article as ArticleModel } from '@prisma/client'
+import { LocalAuthGuard } from './auth/local-auth.guard'
 
 @Controller()
 export class AppController {
@@ -9,6 +20,12 @@ export class AppController {
     private readonly userService: UserService,
     private readonly postService: ArticleService,
   ) {}
+
+  @UseGuards(LocalAuthGuard)
+  @Post('auth/login')
+  async login(@Request() req) {
+    return req.user
+  }
 
   @Get('article/:id')
   async getPostById(@Param('id') id: string): Promise<ArticleModel> {
