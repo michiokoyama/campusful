@@ -31,9 +31,12 @@ export class UserService {
     })
   }
 
-  async findById(userId: number): Promise<User | undefined> {
-    return this.prisma.user.findUnique({
-      where: { id: userId },
+  async findOne(username: string): Promise<User | undefined> {
+    // usernameで連携されるが、運用上はemailを渡す。
+    // （passport strategyのデフォルトがusernameになっている。）
+    // todo: パラメータ名を変更する
+    return this.prisma.user.findFirst({
+      where: { email: username },
     })
   }
 
