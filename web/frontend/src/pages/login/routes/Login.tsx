@@ -62,10 +62,31 @@ const CreateAccountForm = () => {
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
+  const handleLogin = () => {
+    // todo: 環境に応じてURLを変更する
+    fetch('http://localhost:4000/auth/login', 
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: "test1@gmail.com",
+          password: "changeme",
+        })
+      }
+    )
+    .then(res => res.json())
+    .then(data => {
+      const accessToken = data.access_token
+      localStorage.setItem('accessToken', accessToken)
+    }).catch(err => {
+        alert('ログインに失敗しました。') 
+    })
+  }
 
   return (
     <Box minW={{ base: "90%", md: "468px" }}>
-      <form>
         <Stack
           spacing={4}
           p="1rem"
@@ -109,11 +130,11 @@ const LoginForm = () => {
             variant="solid"
             colorScheme="teal"
             width="full"
+            onClick={handleLogin}
           >
             Login
           </Button>
         </Stack>
-      </form>
     </Box>
  
   )
