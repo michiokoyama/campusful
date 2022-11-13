@@ -72,7 +72,7 @@ const LoginForm = () => {
         },
         body: JSON.stringify({
           username: "test1@gmail.com",
-          password: "changeme",
+          password: "pass",
         })
       }
     )
