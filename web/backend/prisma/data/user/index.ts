@@ -15,6 +15,7 @@ const initData = async (
       gender: GenderType.Man,
       email: 'test1@gmail.com',
       universityId: universityIdMap('東京大学'),
+      password: 'pass',
     },
     {
       firstName: '花子',
@@ -23,6 +24,7 @@ const initData = async (
       gender: GenderType.Woman,
       email: 'test2@gmail.com',
       universityId: universityIdMap('慶應義塾大学'),
+      password: 'pass',
     },
   ]
   await conn.user.createMany({

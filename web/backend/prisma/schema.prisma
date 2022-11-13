@@ -34,6 +34,7 @@ model University {
 model User {
   id           Int         @id @default(autoincrement())
   email        String      @unique
+  password     String?
   firstName    String?
   lastName     String?
   displayName  String?
